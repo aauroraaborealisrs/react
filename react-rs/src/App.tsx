@@ -1,35 +1,90 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import React from "react";
 import "./App.css";
+import SearchSection from "./SearchSection";
+import { AppState } from "./interfaces";
 
-function App() {
-  const [count, setCount] = useState(0);
+class App extends React.Component<Record<string, never>, AppState> {
+  constructor(props: Record<string, never>) {
+    super(props);
+    const savedSearchTerm = localStorage.getItem("searchTerm") || "";
+    this.state = {
+      searchTerm: savedSearchTerm,
+      characters: [],
+      error: null,
+      loading: false,
+    };
+  }
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+  componentDidMount() {
+    this.fetchCharacters();
+  }
+
+  fetchCharacters = () => {
+    this.setState({ loading: true });
+    const { searchTerm } = this.state;
+    const query = searchTerm.trim() ? `?search=${searchTerm.trim()}` : "";
+
+    fetch(`https://swapi.dev/api/people/${query}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Шот пошло не так");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        this.setState({ characters: data.results || [], error: null });
+      })
+      .catch((error) => {
+        this.setState({ error: error.message });
+      })
+      .finally(() => {
+        this.setState({ loading: false });
+      });
+  };
+
+  handleInputChange = (term: string) => {
+    this.setState({ searchTerm: term });
+  };
+
+  handleSearch = () => {
+    const { searchTerm } = this.state;
+    const trimmedSearchTerm = searchTerm.trim();
+    if (trimmedSearchTerm) {
+      localStorage.setItem("searchTerm", trimmedSearchTerm);
+      this.fetchCharacters();
+    }
+  };
+
+  render() {
+    const { searchTerm, characters, error, loading } = this.state;
+
+    return (
+      <div className="app">
+        <SearchSection
+          searchTerm={searchTerm}
+          onSearchTermChange={this.handleInputChange}
+          onSearch={this.handleSearch}
+        />
+        <div className="results-section">
+          {loading ? (
+            <div className="loader">Loading...</div>
+          ) : error ? (
+            <p className="error">{error}</p>
+          ) : (
+            characters.map((character) => (
+              <div key={character.url} className="character">
+                <h3>{character.name}</h3>
+                <p>Height: {character.height}</p>
+                <p>Mass: {character.mass}</p>
+                <p>Gender: {character.gender}</p>
+                <p>Birth Year: {character.birth_year}</p>
+              </div>
+            ))
+          )}
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+    );
+  }
 }
 
 export default App;
