@@ -29,3 +29,9 @@ export interface SearchSectionProps {
   onSearchTermChange: (term: string) => void;
   onSearch: () => void;
 }
+
+export interface ComponentProps {}
+
+export interface ComponentState {
+  hasErrorOccurred: boolean;
+}

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Character } from './interfaces';
+import React from "react";
+import { Character } from "./interfaces";
 
 interface CharacterCardProps {
   character: Character;

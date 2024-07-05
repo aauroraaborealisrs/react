@@ -5,7 +5,7 @@
   text-align: center;
 }
 
-.app{
+.app {
   width: 30vw;
 }
 
@@ -35,14 +35,31 @@
   padding: 20px;
 }
 
-.search-section{
+.search-section {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.character{
+.character {
   margin-top: 30px;
   border: 1px solid black;
   border-radius: 5px;
+}
+
+.error-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.error-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.error-button:hover {
+  background-color: darkred;
 }
