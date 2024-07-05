@@ -1,17 +1,18 @@
-import React from "react";
-import "./App.css";
-import SearchSection from "./SearchSection";
-import { AppState } from "./interfaces";
+import React from 'react';
+import './App.css';
+import SearchSection from './SearchSection';
+import CharacterCard from './CharacterCard';
+import { AppState } from './interfaces';
 
 class App extends React.Component<Record<string, never>, AppState> {
   constructor(props: Record<string, never>) {
     super(props);
-    const savedSearchTerm = localStorage.getItem("searchTerm") || "";
+    const savedSearchTerm = localStorage.getItem('searchTerm') || ''; 
     this.state = {
       searchTerm: savedSearchTerm,
       characters: [],
       error: null,
-      loading: false,
+      loading: false, 
     };
   }
 
@@ -20,14 +21,14 @@ class App extends React.Component<Record<string, never>, AppState> {
   }
 
   fetchCharacters = () => {
-    this.setState({ loading: true });
+    this.setState({ loading: true }); 
     const { searchTerm } = this.state;
-    const query = searchTerm.trim() ? `?search=${searchTerm.trim()}` : "";
+    const query = searchTerm.trim() ? `?search=${searchTerm.trim()}` : '';
 
     fetch(`https://swapi.dev/api/people/${query}`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Шот пошло не так");
+          throw new Error('Network response was not ok');
         }
         return response.json();
       })
@@ -38,7 +39,7 @@ class App extends React.Component<Record<string, never>, AppState> {
         this.setState({ error: error.message });
       })
       .finally(() => {
-        this.setState({ loading: false });
+        this.setState({ loading: false }); 
       });
   };
 
@@ -50,7 +51,7 @@ class App extends React.Component<Record<string, never>, AppState> {
     const { searchTerm } = this.state;
     const trimmedSearchTerm = searchTerm.trim();
     if (trimmedSearchTerm) {
-      localStorage.setItem("searchTerm", trimmedSearchTerm);
+      localStorage.setItem('searchTerm', trimmedSearchTerm);
       this.fetchCharacters();
     }
   };
@@ -72,13 +73,7 @@ class App extends React.Component<Record<string, never>, AppState> {
             <p className="error">{error}</p>
           ) : (
             characters.map((character) => (
-              <div key={character.url} className="character">
-                <h3>{character.name}</h3>
-                <p>Height: {character.height}</p>
-                <p>Mass: {character.mass}</p>
-                <p>Gender: {character.gender}</p>
-                <p>Birth Year: {character.birth_year}</p>
-              </div>
+              <CharacterCard key={character.url} character={character} />
             ))
           )}
         </div>

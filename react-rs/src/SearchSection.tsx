@@ -12,7 +12,7 @@ class SearchSection extends React.Component<SearchSectionProps> {
           value={searchTerm}
           onChange={(e) => onSearchTermChange(e.target.value)}
         />
-        <button onClick={onSearch}>Поиск</button>
+        <button onClick={onSearch}>Search</button>
       </div>
     );
   }
