@@ -1,9 +1,5 @@
 import React from "react";
-import { Character } from "./interfaces";
-
-interface CharacterCardProps {
-  character: Character;
-}
+import { CharacterCardProps } from "../interfaces";
 
 class CharacterCard extends React.Component<CharacterCardProps> {
   render() {

@@ -1,12 +1,5 @@
-import React, { Component, ErrorInfo } from "react";
-
-interface Props {
-  children: React.ReactNode;
-}
-
-interface State {
-  hasError: boolean;
-}
+import { Component, ErrorInfo } from "react";
+import { Props, State } from "../interfaces";
 
 class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
@@ -25,7 +18,6 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   render() {
-    console.log(this.state.hasError);
     if (this.state.hasError) {
       return (
         <>

@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import SearchSection from "./SearchSection";
-import CharacterCard from "./CharacterCard";
-import { AppState } from "./interfaces";
+import SearchSection from "./components/SearchSection";
+import CharacterCard from "./components/CharacterCard";
+import { AppState, ComponentProps } from "./interfaces";
 
-class App extends React.Component<Record<string, never>, AppState> {
-  constructor(props: Record<string, never>) {
+class App extends React.Component<ComponentProps, AppState> {
+  constructor(props: ComponentProps) {
     super(props);
     const savedSearchTerm = localStorage.getItem("searchTerm") || "";
     this.state = {
@@ -28,6 +28,7 @@ class App extends React.Component<Record<string, never>, AppState> {
     fetch(`https://swapi.dev/api/people/${query}`)
       .then((response) => {
         if (!response.ok) {
+          console.error("Network response was not ok");
           throw new Error("Network response was not ok");
         }
         return response.json();
@@ -68,7 +69,10 @@ class App extends React.Component<Record<string, never>, AppState> {
         />
         <div className="results-section">
           {loading ? (
-            <div className="loader">Loading...</div>
+            <>
+              <div className="loader-text">Loading...</div>
+              <div className="loader"></div>
+            </>
           ) : error ? (
             <p className="error">{error}</p>
           ) : (

@@ -1,5 +1,5 @@
 import React from "react";
-import { SearchSectionProps } from "./interfaces";
+import { SearchSectionProps } from "../interfaces";
 
 class SearchSection extends React.Component<SearchSectionProps> {
   render() {

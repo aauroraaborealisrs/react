@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { ComponentProps, ComponentState } from "./interfaces";
+import { ComponentProps, ComponentState } from "../interfaces";
 
 export default class CustomComponent extends Component<
   ComponentProps,
@@ -14,6 +14,7 @@ export default class CustomComponent extends Component<
 
   triggerError = () => {
     this.setState({ hasErrorOccurred: true });
+    console.log("An (un)expected error occurred!");
   };
 
   render() {

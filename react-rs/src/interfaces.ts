@@ -35,3 +35,15 @@ export interface ComponentProps {}
 export interface ComponentState {
   hasErrorOccurred: boolean;
 }
+
+export interface Props {
+  children: React.ReactNode;
+}
+
+export interface State {
+  hasError: boolean;
+}
+
+export interface CharacterCardProps {
+  character: Character;
+}
