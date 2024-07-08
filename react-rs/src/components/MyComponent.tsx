@@ -14,7 +14,7 @@ export default class CustomComponent extends Component<
 
   triggerError = () => {
     this.setState({ hasErrorOccurred: true });
-    console.log("An (un)expected error occurred!");
+    console.error("An (un)expected error occurred!");
   };
 
   render() {
