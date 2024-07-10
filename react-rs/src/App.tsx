@@ -1,28 +1,18 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import SearchSection from "./components/SearchSection";
 import CharacterCard from "./components/CharacterCard";
-import { AppState, ComponentProps } from "./interfaces";
+import useSearchTerm from "./useSearchTerm";
+import { ComponentProps, Character } from "./interfaces";
 
-class App extends React.Component<ComponentProps, AppState> {
-  constructor(props: ComponentProps) {
-    super(props);
-    const savedSearchTerm = localStorage.getItem("searchTerm") || "";
-    this.state = {
-      searchTerm: savedSearchTerm,
-      characters: [],
-      error: null,
-      loading: false,
-    };
-  }
+const App: React.FC<ComponentProps> = () => {
+  const [searchTerm, setSearchTerm] = useSearchTerm("searchTerm");
+  const [characters, setCharacters] = useState<Character[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  componentDidMount() {
-    this.fetchCharacters();
-  }
-
-  fetchCharacters = () => {
-    this.setState({ loading: true });
-    const { searchTerm } = this.state;
+  const fetchCharacters = useCallback(() => {
+    setLoading(true);
     const query = searchTerm.trim() ? `?search=${searchTerm.trim()}` : "";
 
     fetch(`https://swapi.dev/api/people/${query}`)
@@ -34,56 +24,56 @@ class App extends React.Component<ComponentProps, AppState> {
         return response.json();
       })
       .then((data) => {
-        this.setState({ characters: data.results || [], error: null });
+        setCharacters(data.results || []);
+        setError(null);
       })
       .catch((error) => {
-        this.setState({ error: error.message });
+        setError(error.message);
       })
       .finally(() => {
-        this.setState({ loading: false });
+        setLoading(false);
       });
+  }, [searchTerm]);
+
+  useEffect(() => {
+    fetchCharacters();
+  }, [fetchCharacters]);
+
+  const handleInputChange = (term: string) => {
+    setSearchTerm(term);
   };
 
-  handleInputChange = (term: string) => {
-    this.setState({ searchTerm: term });
-  };
-
-  handleSearch = () => {
-    const { searchTerm } = this.state;
+  const handleSearch = () => {
     const trimmedSearchTerm = searchTerm.trim();
     if (trimmedSearchTerm) {
-      localStorage.setItem("searchTerm", trimmedSearchTerm);
-      this.fetchCharacters();
+      setSearchTerm(trimmedSearchTerm);
+      fetchCharacters();
     }
   };
 
-  render() {
-    const { searchTerm, characters, error, loading } = this.state;
-
-    return (
-      <div className="app">
-        <SearchSection
-          searchTerm={searchTerm}
-          onSearchTermChange={this.handleInputChange}
-          onSearch={this.handleSearch}
-        />
-        <div className="results-section">
-          {loading ? (
-            <>
-              <div className="loader-text">Loading...</div>
-              <div className="loader"></div>
-            </>
-          ) : error ? (
-            <p className="error">{error}</p>
-          ) : (
-            characters.map((character) => (
-              <CharacterCard key={character.url} character={character} />
-            ))
-          )}
-        </div>
+  return (
+    <div className="app">
+      <SearchSection
+        searchTerm={searchTerm}
+        onSearchTermChange={handleInputChange}
+        onSearch={handleSearch}
+      />
+      <div className="results-section">
+        {loading ? (
+          <>
+            <div className="loader-text">Loading...</div>
+            <div className="loader"></div>
+          </>
+        ) : error ? (
+          <p className="error">{error}</p>
+        ) : (
+          characters.map((character) => (
+            <CharacterCard key={character.url} character={character} />
+          ))
+        )}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default App;
