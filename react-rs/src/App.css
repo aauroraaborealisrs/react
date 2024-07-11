@@ -6,7 +6,7 @@
 }
 
 .app {
-  width: 30vw;
+  width: 60vw;
 }
 
 .card {
@@ -64,6 +64,7 @@
   margin-top: 30px;
   border: 1px solid white;
   border-radius: 5px;
+  flex-grow: 0.7;
 }
 
 .error-container {
@@ -108,4 +109,37 @@
 .pagination span {
   margin: 0 10px;
   font-size: 16px;
+}
+
+.aside{
+  background-color: #ab1f1f;
+}
+
+.results-names{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+  align-items: flex-start;
+}
+
+.results-cont{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.details-section{
+  flex-grow: 0.7;
+  margin-left: 10%;
+  display: flex;
+  flex-direction: column;
+}
+
+.close-btn{
+  color: white;
+  background-color: #000;
+  border: 1px solid white;
+  margin: 10px 0;
+  align-self: flex-end;
 }
