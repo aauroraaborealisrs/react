@@ -2,18 +2,21 @@ import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import SearchSection from "./components/SearchSection";
 import CharacterCard from "./components/CharacterCard";
-import useSearchTerm from "./useSearchTerm";
-import { ComponentProps, Character } from "./interfaces";
+import Pagination from "./components/Pagination";
+import useSearchTerm from "./hooks/useSearchTerm";
+import { Character } from "./interfaces";
 
-const App: React.FC<ComponentProps> = () => {
+const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useSearchTerm("searchTerm");
   const [characters, setCharacters] = useState<Character[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   const fetchCharacters = useCallback(() => {
     setLoading(true);
-    const query = searchTerm.trim() ? `?search=${searchTerm.trim()}` : "";
+    const query = searchTerm.trim() ? `?search=${searchTerm.trim()}&page=${currentPage}` : `?page=${currentPage}`;
 
     fetch(`https://swapi.dev/api/people/${query}`)
       .then((response) => {
@@ -25,6 +28,7 @@ const App: React.FC<ComponentProps> = () => {
       })
       .then((data) => {
         setCharacters(data.results || []);
+        setTotalPages(Math.ceil(data.count / 10));
         setError(null);
       })
       .catch((error) => {
@@ -33,7 +37,7 @@ const App: React.FC<ComponentProps> = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [searchTerm]);
+  }, [searchTerm, currentPage]);
 
   useEffect(() => {
     fetchCharacters();
@@ -41,13 +45,20 @@ const App: React.FC<ComponentProps> = () => {
 
   const handleInputChange = (term: string) => {
     setSearchTerm(term);
+    setCurrentPage(1);
   };
 
   const handleSearch = () => {
     const trimmedSearchTerm = searchTerm.trim();
     if (trimmedSearchTerm) {
-      setSearchTerm(trimmedSearchTerm);
+      setCurrentPage(1); 
       fetchCharacters();
+    }
+  };
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
     }
   };
 
@@ -72,6 +83,11 @@ const App: React.FC<ComponentProps> = () => {
           ))
         )}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

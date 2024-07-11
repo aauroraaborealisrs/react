@@ -83,3 +83,29 @@
 .error-button:hover {
   background-color: darkred;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.pagination button {
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #424242;
+  cursor: not-allowed;
+  visibility: hidden;
+}
+
+.pagination span {
+  margin: 0 10px;
+  font-size: 16px;
+}
