@@ -40,9 +40,9 @@ export default function Detailed() {
   if (loading) {
     return (
       <div className="loader-col">
-      <div className="loader-text">Loading...</div>
-      <div className="loader"></div>
-    </div>
+        <div className="loader-text">Loading...</div>
+        <div className="loader"></div>
+      </div>
     );
   }
 

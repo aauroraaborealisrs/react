@@ -1,6 +1,6 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { Character } from '../interfaces';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { Character } from "../interfaces";
 
 interface CardProps {
   person: Character;
@@ -11,10 +11,13 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ person, searchQuery, currentPage }) => {
   const handleClick = async () => {
     try {
-      const response = await fetch(`https://swapi.dev/api/people/?search=${person.name}`);
+      const response = await fetch(
+        `https://swapi.dev/api/people/?search=${person.name}`,
+      );
       const data = await response.json();
+      console.log(data);
     } catch (error) {
-      console.log('Error fetching data:', error);
+      console.log("Error fetching data:", error);
     }
   };
 
@@ -22,7 +25,7 @@ const Card: React.FC<CardProps> = ({ person, searchQuery, currentPage }) => {
     <NavLink
       key={person.name}
       to={`/?search=${searchQuery}&page=${currentPage}&details=${encodeURIComponent(person.name)}`}
-      className={({ isActive }) => (isActive ? 'active-link' : 'inactive-link')}
+      className={({ isActive }) => (isActive ? "active-link" : "inactive-link")}
       onClick={handleClick}
     >
       {person.name}

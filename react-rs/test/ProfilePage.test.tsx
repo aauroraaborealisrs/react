@@ -1,40 +1,41 @@
-import React from 'react';
-import { render, screen, act, waitFor } from '@testing-library/react';
-import ProfilePage from '../src/components/ProfilePage';
+import React from "react";
+import { render, screen, act, waitFor } from "@testing-library/react";
+import ProfilePage from "../src/components/ProfilePage";
 
-const mockFetch = jest.spyOn(global, 'fetch').mockImplementation((input: RequestInfo | URL, init?: RequestInit) =>
-  new Promise<Response>((resolve) => {
-    setTimeout(() => {
-      resolve({
-        ok: true,
-        status: 200,
-        statusText: 'OK',
-        json: () =>
-          Promise.resolve({
-            results: [
-              {
-                name: 'Luke Skywalker',
-                height: '172',
-                mass: '77',
-                hair_color: 'blond',
-                skin_color: 'fair',
-                eye_color: 'blue',
-                birth_year: '19BBY',
-                gender: 'male',
-              },
-            ],
-          }),
-      } as unknown as Response);
-    }, 100);
-  })
+const mockFetch = jest.spyOn(global, "fetch").mockImplementation(
+  () =>
+    new Promise<Response>((resolve) => {
+      setTimeout(() => {
+        resolve({
+          ok: true,
+          status: 200,
+          statusText: "OK",
+          json: () =>
+            Promise.resolve({
+              results: [
+                {
+                  name: "Luke Skywalker",
+                  height: "172",
+                  mass: "77",
+                  hair_color: "blond",
+                  skin_color: "fair",
+                  eye_color: "blue",
+                  birth_year: "19BBY",
+                  gender: "male",
+                },
+              ],
+            }),
+        } as unknown as Response);
+      }, 100);
+    }),
 );
 
-describe('ProfilePage Component', () => {
+describe("ProfilePage Component", () => {
   beforeEach(() => {
     mockFetch.mockClear();
   });
 
-  test('displays a loading indicator while fetching data', async () => {
+  test("displays a loading indicator while fetching data", async () => {
     await act(async () => {
       render(<ProfilePage name="Luke Skywalker" />);
     });
@@ -46,7 +47,7 @@ describe('ProfilePage Component', () => {
     });
   });
 
-  test('correctly displays the detailed card data', async () => {
+  test("correctly displays the detailed card data", async () => {
     await act(async () => {
       render(<ProfilePage name="Luke Skywalker" />);
     });
@@ -64,9 +65,9 @@ describe('ProfilePage Component', () => {
     expect(screen.getByText(/gender: male/i)).toBeInTheDocument();
   });
 
-  test('displays an error message when fetch fails', async () => {
+  test("displays an error message when fetch fails", async () => {
     mockFetch.mockImplementationOnce(() =>
-      Promise.reject(new Error('Network response was not ok'))
+      Promise.reject(new Error("Network response was not ok")),
     );
 
     await act(async () => {
@@ -74,7 +75,9 @@ describe('ProfilePage Component', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText(/error: network response was not ok/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/error: network response was not ok/i),
+      ).toBeInTheDocument();
     });
   });
 
@@ -83,9 +86,9 @@ describe('ProfilePage Component', () => {
       Promise.resolve({
         ok: true,
         status: 200,
-        statusText: 'OK',
+        statusText: "OK",
         json: () => Promise.resolve({ results: [] }),
-      } as unknown as Response)
+      } as unknown as Response),
     );
 
     await act(async () => {

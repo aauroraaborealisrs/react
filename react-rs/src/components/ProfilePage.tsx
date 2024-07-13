@@ -33,9 +33,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ name }) => {
   if (loading) {
     return (
       <div className="loader-col">
-      <div className="loader-text">Loading...</div>
-      <div className="loader"></div>
-    </div>
+        <div className="loader-text">Loading...</div>
+        <div className="loader"></div>
+      </div>
     );
   }
 

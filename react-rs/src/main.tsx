@@ -29,7 +29,7 @@ if (container !== null) {
   ReactDOM.createRoot(container).render(
     <React.StrictMode>
       <ErrorBoundary>
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
       </ErrorBoundary>
     </React.StrictMode>,
   );
