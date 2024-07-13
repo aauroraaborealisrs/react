@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import Root from "./routes/root";
 import ErrorPage from "./error-page";
-import Contact from "./routes/contact";
+import Detailed from "./routes/detailed";
 import Index from "./routes/index";
 import ErrorBoundary from "./components/errorBoundary";
 
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
       { index: true, element: <Index /> },
       {
         path: "people/:contactId",
-        element: <Contact />,
+        element: <Detailed />,
         errorElement: <ErrorPage />,
       },
     ],

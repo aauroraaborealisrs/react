@@ -47,3 +47,9 @@ export interface State {
 export interface CharacterCardProps {
   character: Character;
 }
+
+export interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}

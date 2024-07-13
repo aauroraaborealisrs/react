@@ -103,10 +103,10 @@ const Root: React.FC = () => {
         />
         <div className="results-section">
           {loading ? (
-            <>
+            <div className="loader-col">
               <div className="loader-text">Loading...</div>
               <div className="loader"></div>
-            </>
+            </div>
           ) : error ? (
             <p className="error">{error}</p>
           ) : (

@@ -1,25 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Character } from "../interfaces";
 
-interface PersonDetail {
-  name: string;
-  height: string;
-  mass: string;
-  hair_color: string;
-  skin_color: string;
-  eye_color: string;
-  birth_year: string;
-  gender: string;
-  homeworld: string;
-  films: string[];
-  species: string[];
-  vehicles: string[];
-  starships: string[];
-}
-
-export default function Contact() {
+export default function Detailed() {
   const { contactId } = useParams<{ contactId: string }>();
-  const [person, setPerson] = useState<PersonDetail | null>(null);
+  const [person, setPerson] = useState<Character | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -53,7 +38,12 @@ export default function Contact() {
   }, [contactId]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loader-col">
+      <div className="loader-text">Loading...</div>
+      <div className="loader"></div>
+    </div>
+    );
   }
 
   if (error) {
