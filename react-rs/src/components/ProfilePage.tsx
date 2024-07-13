@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import CharacterCard from "./CharacterCard";
 import { Character } from "../interfaces";
 
 interface ProfilePageProps {
@@ -7,8 +6,8 @@ interface ProfilePageProps {
 }
 
 const ProfilePage: React.FC<ProfilePageProps> = ({ name }) => {
-  const [character, setCharacter] = useState<Character | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [person, setPerson] = useState<Character | null>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -20,7 +19,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ name }) => {
         return response.json();
       })
       .then((data) => {
-        setCharacter(data.results[0]);
+        setPerson(data.results[0] || null);
         setError(null);
       })
       .catch((error) => {
@@ -32,18 +31,33 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ name }) => {
   }, [name]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <div>Loading...</div>;<div className="loader"></div>;
+      </>
+    );
   }
 
   if (error) {
     return <div>Error: {error}</div>;
   }
 
-  if (!character) {
-    return <div>No character found</div>;
+  if (!person) {
+    return <div>No data available</div>;
   }
 
-  return <CharacterCard character={character} />;
+  return (
+    <div className="profile-page">
+      <h1>{person.name}</h1>
+      <p>Height: {person.height} cm</p>
+      <p>Mass: {person.mass} kg</p>
+      <p>Hair Color: {person.hair_color}</p>
+      <p>Skin Color: {person.skin_color}</p>
+      <p>Eye Color: {person.eye_color}</p>
+      <p>Birth Year: {person.birth_year}</p>
+      <p>Gender: {person.gender}</p>
+    </div>
+  );
 };
 
 export default ProfilePage;

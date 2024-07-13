@@ -14,16 +14,3 @@ const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
 };
 
 export default CharacterCard;
-
-// import React from "react";
-// import { CharacterCardProps } from "../interfaces";
-
-// const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
-//   return (
-//     <div className="character">
-//       <h3>{character.name}</h3>
-//     </div>
-//   );
-// };
-
-// export default CharacterCard;

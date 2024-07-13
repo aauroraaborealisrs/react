@@ -111,11 +111,11 @@
   font-size: 16px;
 }
 
-.aside{
+.aside {
   background-color: #ab1f1f;
 }
 
-.results-names{
+.results-names {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -123,20 +123,20 @@
   align-items: flex-start;
 }
 
-.results-cont{
+.results-cont {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.details-section{
+.details-section {
   flex-grow: 0.7;
   margin-left: 10%;
   display: flex;
   flex-direction: column;
 }
 
-.close-btn{
+.close-btn {
   color: white;
   background-color: #000;
   border: 1px solid white;

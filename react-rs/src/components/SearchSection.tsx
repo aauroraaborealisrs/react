@@ -1,5 +1,10 @@
 import React from "react";
-import { SearchSectionProps } from "../interfaces";
+
+interface SearchSectionProps {
+  searchTerm: string;
+  onSearchTermChange: (term: string) => void;
+  onSearch: () => void;
+}
 
 const SearchSection: React.FC<SearchSectionProps> = ({
   searchTerm,
@@ -9,10 +14,10 @@ const SearchSection: React.FC<SearchSectionProps> = ({
   return (
     <div className="search-section">
       <input
-        className="search-input"
         type="text"
         value={searchTerm}
         onChange={(e) => onSearchTermChange(e.target.value)}
+        placeholder="Search for characters"
       />
       <button onClick={onSearch}>Search</button>
     </div>
