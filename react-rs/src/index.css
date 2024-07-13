@@ -23,6 +23,10 @@ a:hover {
   color: #000000;
 }
 
+.gray-hov:hover{
+  color: #9e9e9e;
+}
+
 body {
   margin: 0;
   display: flex;
@@ -424,4 +428,8 @@ margin: 0 auto;
 
 .results-section{
   width: fit-content;
+}
+
+.white{
+  color: white;
 }
