@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Character } from "../interfaces";
+import React from "react";
 
 export default function Detailed() {
   const { contactId } = useParams<{ contactId: string }>();
