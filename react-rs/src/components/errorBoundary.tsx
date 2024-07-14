@@ -1,5 +1,6 @@
 import { Component, ErrorInfo } from "react";
 import { Props, State } from "../interfaces";
+import React from "react";
 
 class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {

@@ -7,14 +7,6 @@ export interface Character {
   eye_color: string;
   birth_year: string;
   gender: string;
-  homeworld: string;
-  films: string[];
-  species: string[];
-  vehicles: string[];
-  starships: string[];
-  created: string;
-  edited: string;
-  url: string;
 }
 
 export interface AppState {
@@ -46,4 +38,10 @@ export interface State {
 
 export interface CharacterCardProps {
   character: Character;
+}
+
+export interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
 }
