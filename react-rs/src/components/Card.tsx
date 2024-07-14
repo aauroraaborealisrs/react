@@ -25,7 +25,7 @@ const Card: React.FC<CardProps> = ({ person, searchQuery, currentPage }) => {
     <NavLink
       key={person.name}
       to={`/?search=${searchQuery}&page=${currentPage}&details=${encodeURIComponent(person.name)}`}
-      className={({ isActive }) => (isActive ? "active-link" : "inactive-link")}
+      className="active-link"
       onClick={handleClick}
     >
       {person.name}
