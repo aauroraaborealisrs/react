@@ -1,83 +1,62 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useSearchParams } from "react-router-dom";
-import SearchSection from "../components/SearchSection";
-import ProfilePage from "../components/ProfilePage";
-import useLocalStorage from "../hooks/useLocalStorage";
-import CardList from "../components/CardList";
-import { Character } from "../interfaces";
-import Pagination from "../components/Pagination";
+import React, { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import SearchSection from '../components/SearchSection';
+import ProfilePage from '../components/ProfilePage';
+import CardList from '../components/CardList';
+import Pagination from '../components/Pagination';
+import { RootState, AppDispatch } from '../store/store';
+import {
+  setSearchTerm,
+  setStoredSearchTerm,
+  setCurrentPage,
+  fetchPeople
+} from '../store/peopleSlice';
 
 const Root: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [people, setPeople] = useState<Character[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
-  const [storedSearchTerm, setStoredSearchTerm] = useLocalStorage(
-    "searchTerm",
-    "",
-  );
+  const dispatch: AppDispatch = useDispatch();
+  const {
+    searchTerm,
+    people,
+    error,
+    loading,
+    totalPages,
+    currentPage,
+    storedSearchTerm
+  } = useSelector((state: RootState) => state.people);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const pageFromUrl = parseInt(searchParams.get("page") || "1", 10);
-  const detailsFromUrl = searchParams.get("details");
-  const searchQuery = searchParams.get("search") || "";
+  const pageFromUrl = parseInt(searchParams.get('page') || '1', 10);
+  const detailsFromUrl = searchParams.get('details');
+  const searchQuery = searchParams.get('search') || '';
 
   useEffect(() => {
-    setCurrentPage(pageFromUrl);
-  }, [pageFromUrl]);
-
-  const fetchPeople = useCallback(() => {
-    setLoading(true);
-    const query = searchQuery.trim()
-      ? `?search=${searchQuery.trim()}&page=${currentPage}`
-      : `?page=${currentPage}`;
-
-    fetch(`https://swapi.dev/api/people/${query}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setPeople(data.results || []);
-        setTotalPages(Math.ceil(data.count / 10));
-        setError(null);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [searchQuery, currentPage]);
+    dispatch(setCurrentPage(pageFromUrl));
+  }, [pageFromUrl, dispatch]);
 
   useEffect(() => {
-    fetchPeople();
-  }, [fetchPeople]);
+    dispatch(fetchPeople({ searchQuery, currentPage }));
+  }, [searchQuery, currentPage, dispatch]);
 
   const handleInputChange = (term: string) => {
-    setSearchTerm(term);
+    dispatch(setSearchTerm(term));
   };
 
   const handleSearch = () => {
     const trimmedSearchTerm = searchTerm.trim();
     if (trimmedSearchTerm) {
-      setSearchParams({ search: trimmedSearchTerm, page: "1" });
-      setStoredSearchTerm(trimmedSearchTerm);
+      setSearchParams({ search: trimmedSearchTerm, page: '1' });
+      dispatch(setStoredSearchTerm(trimmedSearchTerm));
     } else {
-      setSearchParams({ page: "1" });
-      setStoredSearchTerm("");
+      setSearchParams({ page: '1' });
+      dispatch(setStoredSearchTerm(''));
     }
-    setCurrentPage(1);
+    dispatch(setCurrentPage(1));
   };
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
+      dispatch(setCurrentPage(page));
       setSearchParams({ search: searchTerm.trim(), page: page.toString() });
     }
   };
@@ -87,8 +66,8 @@ const Root: React.FC = () => {
   };
 
   useEffect(() => {
-    setSearchTerm(storedSearchTerm);
-  }, [storedSearchTerm]);
+    dispatch(setSearchTerm(storedSearchTerm));
+  }, [storedSearchTerm, dispatch]);
 
   return (
     <div className="app">

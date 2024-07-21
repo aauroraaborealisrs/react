@@ -6,6 +6,8 @@ import Root from "./routes/root";
 import ErrorPage from "./components/error-page";
 import Index from "./routes/index";
 import ErrorBoundary from "./components/errorBoundary";
+import { store } from "./store/store";
+import { Provider } from "react-redux";
 
 const router = createBrowserRouter([
   {
@@ -25,9 +27,11 @@ const container = document.getElementById("root");
 if (container !== null) {
   ReactDOM.createRoot(container).render(
     <React.StrictMode>
+        <Provider store={store}>
       <ErrorBoundary>
         <RouterProvider router={router} />
       </ErrorBoundary>
+      </Provider>,
     </React.StrictMode>,
   );
 } else {
