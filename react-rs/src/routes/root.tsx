@@ -1,29 +1,16 @@
 import React, { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../store/store';
 import SearchSection from '../components/SearchSection';
-import ProfilePage from '../components/ProfilePage';
 import CardList from '../components/CardList';
 import Pagination from '../components/Pagination';
-import { RootState, AppDispatch } from '../store/store';
-import {
-  setSearchTerm,
-  setStoredSearchTerm,
-  setCurrentPage,
-  fetchPeople
-} from '../store/peopleSlice';
+import { setSearchTerm, setStoredSearchTerm, setCurrentPage, fetchPeople } from '../store/peopleSlice';
+import ProfilePage from '../components/ProfilePage';
+import { useSearchParams } from 'react-router-dom';
 
 const Root: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const {
-    searchTerm,
-    people,
-    error,
-    loading,
-    totalPages,
-    currentPage,
-    storedSearchTerm
-  } = useSelector((state: RootState) => state.people);
+  const { searchTerm, people, error, loading, totalPages, currentPage, storedSearchTerm } = useSelector((state: RootState) => state.people);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const pageFromUrl = parseInt(searchParams.get('page') || '1', 10);

@@ -90,7 +90,6 @@ body {
   color: #121212;
 }
 textarea,
-input,
 button {
   font-size: 1rem;
   font-family: inherit;
@@ -110,7 +109,6 @@ button {
 }
 
 textarea:hover,
-input:hover,
 button:hover {
   box-shadow:
     0 0px 1px hsla(0, 0%, 0%, 0.6),
@@ -367,16 +365,10 @@ i {
 .active-link {
   color: white;
   padding: 10px;
-  border: 1px solid white;
   margin: 5px;
   width: 100%;
   width: 280px;
   border-radius: 10px;
-}
-
-.active-link:hover {
-  background-color: #818181;
-  border: 1px solid #818181;
 }
 
 .loader-col {
@@ -431,4 +423,45 @@ i {
 
 .white {
   color: white;
+}
+
+.result-item{
+  display: flex;
+  border: 1px solid white;
+  padding: 1px;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+.checkbox{
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.result-item:hover {
+  background-color:darkgrey;
+  border: 1px solid darkgrey;
+  color: black !important;
+}
+
+.checkbox:hover{
+  box-shadow: none;
+}
+
+result-item input:hover{
+  box-shadow:none;
+}
+
+.search-input{
+  font-size: 1rem;
+  font-family: inherit;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  box-shadow:
+    0 0px 1px hsla(0, 0%, 0%, 0.2),
+    0 1px 2px hsla(0, 0%, 0%, 0.2);
+  background-color: white;
+  line-height: 1.5;
+  margin: 0;
 }
