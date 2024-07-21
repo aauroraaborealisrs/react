@@ -3,11 +3,11 @@
     "target": "ES2018",
     "jsx": "react-jsx",
     "module": "ESNext",
-    "moduleResolution": "node10", 
+    "moduleResolution": "node10",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true, 
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "noImplicitAny": true,                            
-    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true
   }
 }

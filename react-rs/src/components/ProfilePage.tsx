@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../store/store';
-import { fetchProfile } from '../store/profileSlice';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "../store/store";
+import { fetchProfile } from "../store/profileSlice";
 
 interface ProfilePageProps {
   name: string;
@@ -9,7 +9,9 @@ interface ProfilePageProps {
 
 const ProfilePage: React.FC<ProfilePageProps> = ({ name }) => {
   const dispatch: AppDispatch = useDispatch();
-  const { person, loading, error } = useSelector((state: RootState) => state.profile);
+  const { person, loading, error } = useSelector(
+    (state: RootState) => state.profile,
+  );
 
   useEffect(() => {
     dispatch(fetchProfile(name));
@@ -47,4 +49,3 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ name }) => {
 };
 
 export default ProfilePage;
-

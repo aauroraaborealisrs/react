@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { Character } from '../interfaces';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { Character } from "../interfaces";
 
 interface ProfileState {
   person: Character | null;
@@ -10,23 +10,25 @@ interface ProfileState {
 const initialState: ProfileState = {
   person: null,
   loading: false,
-  error: null
+  error: null,
 };
 
 export const fetchProfile = createAsyncThunk(
-  'profile/fetchProfile',
+  "profile/fetchProfile",
   async (name: string) => {
-    const response = await fetch(`https://swapi.dev/api/people/?search=${name}`);
+    const response = await fetch(
+      `https://swapi.dev/api/people/?search=${name}`,
+    );
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error("Network response was not ok");
     }
     const data = await response.json();
     return data.results[0] || null;
-  }
+  },
 );
 
 const profileSlice = createSlice({
-  name: 'profile',
+  name: "profile",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -35,15 +37,18 @@ const profileSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchProfile.fulfilled, (state, action: PayloadAction<Character | null>) => {
-        state.loading = false;
-        state.person = action.payload;
-      })
+      .addCase(
+        fetchProfile.fulfilled,
+        (state, action: PayloadAction<Character | null>) => {
+          state.loading = false;
+          state.person = action.payload;
+        },
+      )
       .addCase(fetchProfile.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to fetch profile';
+        state.error = action.error.message || "Failed to fetch profile";
       });
-  }
+  },
 });
 
 export default profileSlice.reducer;

@@ -19,10 +19,6 @@ a {
   text-decoration: inherit;
 }
 
-a:hover {
-  color: #000000;
-}
-
 .gray-hov:hover {
   color: #9e9e9e;
 }
@@ -217,15 +213,9 @@ button:active {
   float: right;
   color: #eeb004;
 }
-.sidebar nav a.active span {
-  color: inherit;
-}
 
 i {
   color: #818181;
-}
-.sidebar nav .active i {
-  color: inherit;
 }
 
 .sidebar ul {
@@ -425,34 +415,39 @@ i {
   color: white;
 }
 
-.result-item{
+.result-item {
   display: flex;
   border: 1px solid white;
   padding: 1px;
   margin: 5px;
   border-radius: 10px;
+  cursor: pointer;
 }
 
-.checkbox{
+.checkbox {
   margin-left: 10px;
   cursor: pointer;
 }
 
 .result-item:hover {
-  background-color:darkgrey;
+  background-color: darkgrey;
   border: 1px solid darkgrey;
-  color: black !important;
 }
 
-.checkbox:hover{
+.result-item:hover a {
+  color: black;
+}
+
+.checkbox:hover {
+  box-shadow: none;
+  cursor: pointer;
+}
+
+result-item input:hover {
   box-shadow: none;
 }
 
-result-item input:hover{
-  box-shadow:none;
-}
-
-.search-input{
+.search-input {
   font-size: 1rem;
   font-family: inherit;
   border: none;
@@ -464,4 +459,34 @@ result-item input:hover{
   background-color: white;
   line-height: 1.5;
   margin: 0;
+}
+
+.flyout {
+  position: fixed;
+  bottom: 50px;
+  right: 10px;
+  width: 300px;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+  border-radius: 15px;
+  border: 1px solid white;
+}
+
+.flyout button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 0px 5px;
+  border: 1px solid white;
+}
+
+.flyout button:hover {
+  background-color: #555;
 }
