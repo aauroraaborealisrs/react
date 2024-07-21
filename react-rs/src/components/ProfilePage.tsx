@@ -1,34 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Character } from "../interfaces";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../store/store';
+import { fetchProfile } from '../store/profileSlice';
 
 interface ProfilePageProps {
   name: string;
 }
 
 const ProfilePage: React.FC<ProfilePageProps> = ({ name }) => {
-  const [person, setPerson] = useState<Character | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch: AppDispatch = useDispatch();
+  const { person, loading, error } = useSelector((state: RootState) => state.profile);
 
   useEffect(() => {
-    fetch(`https://swapi.dev/api/people/?search=${name}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setPerson(data.results[0] || null);
-        setError(null);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [name]);
+    dispatch(fetchProfile(name));
+  }, [name, dispatch]);
 
   if (loading) {
     return (
@@ -62,3 +47,4 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ name }) => {
 };
 
 export default ProfilePage;
+
