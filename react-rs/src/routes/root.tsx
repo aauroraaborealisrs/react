@@ -9,17 +9,20 @@ import ProfilePage from '../components/ProfilePage';
 import Pagination from '../components/Pagination';
 import Flyout from '../components/Flyout';
 import SearchSection from '../components/SearchSection';
+import { useTheme } from '../ThemeContext';
+import ThemeSelector from '../components/ThemeSelector';
+
 
 const Root: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const { searchTerm, people, totalPages, currentPage, storedSearchTerm, selectedItems } = useSelector((state: RootState) => state.people);
-
   const [searchParams, setSearchParams] = useSearchParams();
   const pageFromUrl = parseInt(searchParams.get('page') || '1', 10);
   const detailsFromUrl = searchParams.get('details');
   const searchQuery = searchParams.get('search') || '';
 
   const { data, isLoading, isError, error } = useGetPeopleQuery({ searchQuery, page: currentPage });
+  const { theme } = useTheme();
 
   useEffect(() => {
     dispatch(setCurrentPage(pageFromUrl));
@@ -33,6 +36,10 @@ const Root: React.FC = () => {
       dispatch(setTotalPages(Math.ceil(data.count / 10)));
     }
   }, [data, isError, error, dispatch]);
+
+  useEffect(() => {
+    document.body.setAttribute('data-theme', theme);
+  }, [theme]);
 
   const handleInputChange = (term: string) => {
     dispatch(setSearchTerm(term));
@@ -67,6 +74,7 @@ const Root: React.FC = () => {
 
   return (
     <div className="app">
+      <ThemeSelector />
       <div className="column sidebar">
         <SearchSection
           searchTerm={searchTerm}

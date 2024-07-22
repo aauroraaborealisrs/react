@@ -8,6 +8,7 @@ import Index from "./routes/index";
 import ErrorBoundary from "./components/errorBoundary";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import { ThemeProvider } from "./ThemeContext";
 
 const router = createBrowserRouter([
   {
@@ -28,12 +29,13 @@ if (container !== null) {
   ReactDOM.createRoot(container).render(
     <React.StrictMode>
       <Provider store={store}>
+      <ThemeProvider>
         <ErrorBoundary>
           <RouterProvider router={router} />
         </ErrorBoundary>
+        </ThemeProvider>
       </Provider>
-      ,
-    </React.StrictMode>,
+    </React.StrictMode>
   );
 } else {
   console.error('Element with id "root" not found');
