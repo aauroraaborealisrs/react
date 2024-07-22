@@ -1,5 +1,5 @@
-import React from 'react';
-import { useGetPersonQuery } from '../services/api';
+import React from "react";
+import { useGetPersonQuery } from "../services/api";
 
 interface ProfilePageProps {
   name: string;

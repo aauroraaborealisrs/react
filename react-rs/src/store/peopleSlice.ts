@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Character } from '../interfaces';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Character } from "../interfaces";
 
 interface PeopleState {
   searchTerm: string;
@@ -11,16 +11,16 @@ interface PeopleState {
 }
 
 const initialState: PeopleState = {
-  searchTerm: '',
+  searchTerm: "",
   people: [],
   totalPages: 1,
   currentPage: 1,
-  storedSearchTerm: '',
+  storedSearchTerm: "",
   selectedItems: [],
 };
 
 const peopleSlice = createSlice({
-  name: 'people',
+  name: "people",
   initialState,
   reducers: {
     setSearchTerm(state, action: PayloadAction<string>) {
@@ -39,12 +39,16 @@ const peopleSlice = createSlice({
       state.totalPages = action.payload;
     },
     selectItem(state, action: PayloadAction<Character>) {
-      if (!state.selectedItems.some((item) => item.name === action.payload.name)) {
+      if (
+        !state.selectedItems.some((item) => item.name === action.payload.name)
+      ) {
         state.selectedItems.push(action.payload);
       }
     },
     unselectItem(state, action: PayloadAction<string>) {
-      state.selectedItems = state.selectedItems.filter((item) => item.name !== action.payload);
+      state.selectedItems = state.selectedItems.filter(
+        (item) => item.name !== action.payload,
+      );
     },
     unselectAllItems(state) {
       state.selectedItems = [];

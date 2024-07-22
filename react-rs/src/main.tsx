@@ -29,13 +29,13 @@ if (container !== null) {
   ReactDOM.createRoot(container).render(
     <React.StrictMode>
       <Provider store={store}>
-      <ThemeProvider>
-        <ErrorBoundary>
-          <RouterProvider router={router} />
-        </ErrorBoundary>
+        <ThemeProvider>
+          <ErrorBoundary>
+            <RouterProvider router={router} />
+          </ErrorBoundary>
         </ThemeProvider>
       </Provider>
-    </React.StrictMode>
+    </React.StrictMode>,
   );
 } else {
   console.error('Element with id "root" not found');
