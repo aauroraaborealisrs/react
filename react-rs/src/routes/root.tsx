@@ -1,44 +1,38 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../store/store";
-import SearchSection from "../components/SearchSection";
-import CardList from "../components/CardList";
-import Pagination from "../components/Pagination";
-import Flyout from "../components/Flyout";
-import {
-  setSearchTerm,
-  setStoredSearchTerm,
-  setCurrentPage,
-  fetchPeople,
-} from "../store/peopleSlice";
-import ProfilePage from "../components/ProfilePage";
-import { useSearchParams } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+import { RootState, AppDispatch } from '../store/store';
+import { setSearchTerm, setStoredSearchTerm, setCurrentPage, setPeople, setTotalPages } from '../store/peopleSlice';
+import { useGetPeopleQuery } from '../services/api';
+import CardList from '../components/CardList';
+import ProfilePage from '../components/ProfilePage';
+import Pagination from '../components/Pagination';
+import Flyout from '../components/Flyout';
+import SearchSection from '../components/SearchSection';
 
 const Root: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const {
-    searchTerm,
-    people,
-    error,
-    loading,
-    totalPages,
-    currentPage,
-    storedSearchTerm,
-    selectedItems,
-  } = useSelector((state: RootState) => state.people);
+  const { searchTerm, people, totalPages, currentPage, storedSearchTerm, selectedItems } = useSelector((state: RootState) => state.people);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const pageFromUrl = parseInt(searchParams.get("page") || "1", 10);
-  const detailsFromUrl = searchParams.get("details");
-  const searchQuery = searchParams.get("search") || "";
+  const pageFromUrl = parseInt(searchParams.get('page') || '1', 10);
+  const detailsFromUrl = searchParams.get('details');
+  const searchQuery = searchParams.get('search') || '';
+
+  const { data, isLoading, isError, error } = useGetPeopleQuery({ searchQuery, page: currentPage });
 
   useEffect(() => {
     dispatch(setCurrentPage(pageFromUrl));
   }, [pageFromUrl, dispatch]);
 
   useEffect(() => {
-    dispatch(fetchPeople({ searchQuery, currentPage }));
-  }, [searchQuery, currentPage, dispatch]);
+    if (isError) {
+      console.error(error);
+    } else if (data) {
+      dispatch(setPeople(data.results));
+      dispatch(setTotalPages(Math.ceil(data.count / 10)));
+    }
+  }, [data, isError, error, dispatch]);
 
   const handleInputChange = (term: string) => {
     dispatch(setSearchTerm(term));
@@ -47,11 +41,11 @@ const Root: React.FC = () => {
   const handleSearch = () => {
     const trimmedSearchTerm = searchTerm.trim();
     if (trimmedSearchTerm) {
-      setSearchParams({ search: trimmedSearchTerm, page: "1" });
+      setSearchParams({ search: trimmedSearchTerm, page: '1' });
       dispatch(setStoredSearchTerm(trimmedSearchTerm));
     } else {
-      setSearchParams({ page: "1" });
-      dispatch(setStoredSearchTerm(""));
+      setSearchParams({ page: '1' });
+      dispatch(setStoredSearchTerm(''));
     }
     dispatch(setCurrentPage(1));
   };
@@ -79,13 +73,13 @@ const Root: React.FC = () => {
           onSearchTermChange={handleInputChange}
           onSearch={handleSearch}
         />
-        {loading ? (
+        {isLoading ? (
           <>
             <div className="loader-text">Loading...</div>
             <div className="loader"></div>
           </>
-        ) : error ? (
-          <p className="error">{error}</p>
+        ) : isError ? (
+          <p className="error">{error.toString()}</p>
         ) : (
           <CardList
             people={people}

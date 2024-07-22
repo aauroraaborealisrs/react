@@ -1,23 +1,15 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../store/store";
-import { fetchProfile } from "../store/profileSlice";
+import React from 'react';
+import { useGetPersonQuery } from '../services/api';
 
 interface ProfilePageProps {
   name: string;
 }
 
 const ProfilePage: React.FC<ProfilePageProps> = ({ name }) => {
-  const dispatch: AppDispatch = useDispatch();
-  const { person, loading, error } = useSelector(
-    (state: RootState) => state.profile,
-  );
+  const { data, isLoading, isError, error } = useGetPersonQuery(name);
+  const person = data?.results[0];
 
-  useEffect(() => {
-    dispatch(fetchProfile(name));
-  }, [name, dispatch]);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="loader-col">
         <div className="loader-text">Loading...</div>
@@ -26,8 +18,8 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ name }) => {
     );
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
+  if (isError) {
+    return <div>Error: {error.toString()}</div>;
   }
 
   if (!person) {

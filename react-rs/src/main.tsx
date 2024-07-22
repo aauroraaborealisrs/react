@@ -6,8 +6,8 @@ import Root from "./routes/root";
 import ErrorPage from "./components/error-page";
 import Index from "./routes/index";
 import ErrorBoundary from "./components/errorBoundary";
-import { store } from "./store/store";
 import { Provider } from "react-redux";
+import store from "./store/store";
 
 const router = createBrowserRouter([
   {
