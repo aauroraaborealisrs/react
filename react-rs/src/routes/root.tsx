@@ -1,25 +1,41 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
-import { RootState, AppDispatch } from '../store/store';
-import SearchSection from '../components/SearchSection';
-import CardList from '../components/CardList';
-import Pagination from '../components/Pagination';
-import Flyout from '../components/Flyout';
-import ProfilePage from '../components/ProfilePage';
-import { setSearchTerm, setStoredSearchTerm, setCurrentPage, setPeople, setTotalPages } from '../store/peopleSlice';
-import { useGetPeopleQuery } from '../services/api';
-import ThemeSelector from '../components/ThemeSelector';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { RootState, AppDispatch } from "../store/store";
+import SearchSection from "../components/SearchSection";
+import CardList from "../components/CardList";
+import Pagination from "../components/Pagination";
+import Flyout from "../components/Flyout";
+import ProfilePage from "../components/ProfilePage";
+import {
+  setSearchTerm,
+  setStoredSearchTerm,
+  setCurrentPage,
+  setPeople,
+  setTotalPages,
+} from "../store/peopleSlice";
+import { useGetPeopleQuery } from "../services/api";
+import ThemeSelector from "../components/ThemeSelector";
 
 const Root: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { searchTerm, people, totalPages, currentPage, storedSearchTerm, selectedItems } = useSelector((state: RootState) => state.people);
+  const {
+    searchTerm,
+    people,
+    totalPages,
+    currentPage,
+    storedSearchTerm,
+    selectedItems,
+  } = useSelector((state: RootState) => state.people);
   const [searchParams, setSearchParams] = useSearchParams();
-  const pageFromUrl = parseInt(searchParams.get('page') || '1', 10);
-  const detailsFromUrl = searchParams.get('details');
-  const searchQuery = searchParams.get('search') || '';
+  const pageFromUrl = parseInt(searchParams.get("page") || "1", 10);
+  const detailsFromUrl = searchParams.get("details");
+  const searchQuery = searchParams.get("search") || "";
 
-  const { data, isLoading, isError, error } = useGetPeopleQuery({ searchQuery, page: currentPage });
+  const { data, isLoading, isError, error } = useGetPeopleQuery({
+    searchQuery,
+    page: currentPage,
+  });
 
   useEffect(() => {
     dispatch(setCurrentPage(pageFromUrl));
@@ -41,11 +57,11 @@ const Root: React.FC = () => {
   const handleSearch = () => {
     const trimmedSearchTerm = searchTerm.trim();
     if (trimmedSearchTerm) {
-      setSearchParams({ search: trimmedSearchTerm, page: '1' });
+      setSearchParams({ search: trimmedSearchTerm, page: "1" });
       dispatch(setStoredSearchTerm(trimmedSearchTerm));
     } else {
-      setSearchParams({ page: '1' });
-      dispatch(setStoredSearchTerm(''));
+      setSearchParams({ page: "1" });
+      dispatch(setStoredSearchTerm(""));
     }
     dispatch(setCurrentPage(1));
   };
@@ -64,7 +80,6 @@ const Root: React.FC = () => {
   useEffect(() => {
     dispatch(setSearchTerm(storedSearchTerm));
   }, [storedSearchTerm, dispatch]);
-
 
   return (
     <div className="app">
