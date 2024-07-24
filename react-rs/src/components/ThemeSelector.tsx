@@ -1,26 +1,28 @@
-import React from "react";
-import { useTheme } from "../useTheme";
+import React from 'react';
+import { useTheme } from '../ThemeContext';
 
 const ThemeSelector: React.FC = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="theme-selector">
       <label>
         <input
           type="radio"
+          name="theme"
           value="light"
-          checked={theme === "light"}
-          onChange={() => setTheme("light")}
+          checked={theme === 'light'}
+          onChange={toggleTheme}
         />
         Light
       </label>
       <label>
         <input
           type="radio"
+          name="theme"
           value="dark"
-          checked={theme === "dark"}
-          onChange={() => setTheme("dark")}
+          checked={theme === 'dark'}
+          onChange={toggleTheme}
         />
         Dark
       </label>
