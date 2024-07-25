@@ -30,11 +30,9 @@ if (container !== null) {
     <React.StrictMode>
       <ThemeProvider>
         <Provider store={store}>
-          {/* <ThemeProvider> */}
           <ErrorBoundary>
             <RouterProvider router={router} />
           </ErrorBoundary>
-          {/* </ThemeProvider> */}
         </Provider>
       </ThemeProvider>
     </React.StrictMode>,

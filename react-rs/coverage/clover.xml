@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1721901465106" clover="3.2.0">
-  <project timestamp="1721901465106" name="All files">
-    <metrics statements="61" coveredstatements="55" conditionals="14" coveredconditionals="13" methods="25" coveredmethods="20" elements="100" coveredelements="88" complexity="0" loc="61" ncloc="61" packages="3" files="6" classes="6"/>
-    <package name="components">
+<coverage generated="1721905462907" clover="3.2.0">
+  <project timestamp="1721905462907" name="All files">
+    <metrics statements="80" coveredstatements="74" conditionals="20" coveredconditionals="19" methods="31" coveredmethods="26" elements="131" coveredelements="119" complexity="0" loc="80" ncloc="80" packages="5" files="8" classes="8"/>
+    <package name="src">
+      <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+      <file name="ThemeContext.tsx" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\ThemeContext.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="18" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.components">
       <metrics statements="39" coveredstatements="37" conditionals="13" coveredconditionals="12" methods="12" coveredmethods="11"/>
       <file name="CardList.tsx" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\components\CardList.tsx">
         <metrics statements="16" coveredstatements="15" conditionals="4" coveredconditionals="4" methods="6" coveredmethods="5"/>
@@ -56,7 +69,25 @@
         <line num="28" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="services">
+    <package name="src.hooks">
+      <metrics statements="12" coveredstatements="12" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
+      <file name="useLocalStorage.ts" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\hooks\useLocalStorage.ts">
+        <metrics statements="12" coveredstatements="12" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="12" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.services">
       <metrics statements="6" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
       <file name="api.ts" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\services\api.ts">
         <metrics statements="6" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
@@ -68,7 +99,7 @@
         <line num="21" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="store">
+    <package name="src.store">
       <metrics statements="16" coveredstatements="14" conditionals="1" coveredconditionals="1" methods="10" coveredmethods="8"/>
       <file name="peopleSlice.ts" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\store\peopleSlice.ts">
         <metrics statements="16" coveredstatements="14" conditionals="1" coveredconditionals="1" methods="10" coveredmethods="8"/>
