@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { Character } from "../interfaces";
 
-interface ProfileState {
+export interface ProfileState {
   person: Character | null;
   loading: boolean;
   error: string | null;

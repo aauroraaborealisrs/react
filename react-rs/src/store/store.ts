@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import peopleReducer from "./peopleSlice";
+import profileReducer from "./profileSlice";
 import { api } from "../services/api";
 
 const store = configureStore({
   reducer: {
     people: peopleReducer,
+    profile: profileReducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>
