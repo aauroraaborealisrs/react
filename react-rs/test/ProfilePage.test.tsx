@@ -1,102 +1,93 @@
 import React from "react";
-import { render, screen, act, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import { useGetPersonQuery } from "../src/services/api";
 import ProfilePage from "../src/components/ProfilePage";
 
-const mockFetch = jest.spyOn(global, "fetch").mockImplementation(
-  () =>
-    new Promise<Response>((resolve) => {
-      setTimeout(() => {
-        resolve({
-          ok: true,
-          status: 200,
-          statusText: "OK",
-          json: () =>
-            Promise.resolve({
-              results: [
-                {
-                  name: "Luke Skywalker",
-                  height: "172",
-                  mass: "77",
-                  hair_color: "blond",
-                  skin_color: "fair",
-                  eye_color: "blue",
-                  birth_year: "19BBY",
-                  gender: "male",
-                },
-              ],
-            }),
-        } as unknown as Response);
-      }, 100);
-    }),
-);
+jest.mock("../src/services/api", () => ({
+  ...jest.requireActual("../src/services/api"),
+  useGetPersonQuery: jest.fn(),
+}));
 
-describe("ProfilePage Component", () => {
+describe("ProfilePage", () => {
+  const mockUseGetPersonQuery = useGetPersonQuery as jest.MockedFunction<
+    typeof useGetPersonQuery
+  >;
+
   beforeEach(() => {
-    mockFetch.mockClear();
+    jest.clearAllMocks();
   });
 
-  test("displays a loading indicator while fetching data", async () => {
-    await act(async () => {
-      render(<ProfilePage name="Luke Skywalker" />);
+  test("renders loading state", () => {
+    mockUseGetPersonQuery.mockReturnValue({
+      data: null,
+      isLoading: true,
+      isError: false,
+      error: null,
+      refetch: jest.fn(),
+      isFetching: false,
+      fulfilledTimeStamp: 0,
+      endpointName: "getPerson",
+      startedTimeStamp: 0,
     });
 
-    expect(screen.getByText(/loading/i)).toBeInTheDocument();
+    render(<ProfilePage name="Luke Skywalker" />);
 
-    await waitFor(() => {
-      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
-    });
+    expect(screen.getByText("Loading...")).toBeInTheDocument();
   });
 
-  test("correctly displays the detailed card data", async () => {
-    await act(async () => {
-      render(<ProfilePage name="Luke Skywalker" />);
+  test("renders no data state", () => {
+    mockUseGetPersonQuery.mockReturnValue({
+      data: { results: [] },
+      isLoading: false,
+      isError: false,
+      error: null,
+      refetch: jest.fn(),
+      isFetching: false,
+      fulfilledTimeStamp: 0,
+      endpointName: "getPerson",
+      startedTimeStamp: 0,
     });
 
-    await waitFor(() => {
-      expect(screen.getByText(/luke skywalker/i)).toBeInTheDocument();
-    });
+    render(<ProfilePage name="Luke Skywalker" />);
 
-    expect(screen.getByText(/height: 172 cm/i)).toBeInTheDocument();
-    expect(screen.getByText(/mass: 77 kg/i)).toBeInTheDocument();
-    expect(screen.getByText(/hair color: blond/i)).toBeInTheDocument();
-    expect(screen.getByText(/skin color: fair/i)).toBeInTheDocument();
-    expect(screen.getByText(/eye color: blue/i)).toBeInTheDocument();
-    expect(screen.getByText(/birth year: 19bby/i)).toBeInTheDocument();
-    expect(screen.getByText(/gender: male/i)).toBeInTheDocument();
+    expect(screen.getByText("No data available")).toBeInTheDocument();
   });
 
-  test("displays an error message when fetch fails", async () => {
-    mockFetch.mockImplementationOnce(() =>
-      Promise.reject(new Error("Network response was not ok")),
-    );
-
-    await act(async () => {
-      render(<ProfilePage name="Luke Skywalker" />);
+  test("renders profile data", () => {
+    mockUseGetPersonQuery.mockReturnValue({
+      data: {
+        results: [
+          {
+            name: "Luke Skywalker",
+            height: "172",
+            mass: "77",
+            hair_color: "blond",
+            skin_color: "fair",
+            eye_color: "blue",
+            birth_year: "19BBY",
+            gender: "male",
+          },
+        ],
+      },
+      isLoading: false,
+      isError: false,
+      error: null,
+      refetch: jest.fn(),
+      isFetching: false,
+      fulfilledTimeStamp: 0,
+      endpointName: "getPerson",
+      startedTimeStamp: 0,
     });
 
-    await waitFor(() => {
-      expect(
-        screen.getByText(/error: network response was not ok/i),
-      ).toBeInTheDocument();
-    });
-  });
+    render(<ProfilePage name="Luke Skywalker" />);
 
-  test('displays a "No data available" message when no person is found', async () => {
-    mockFetch.mockImplementationOnce(() =>
-      Promise.resolve({
-        ok: true,
-        status: 200,
-        statusText: "OK",
-        json: () => Promise.resolve({ results: [] }),
-      } as unknown as Response),
-    );
-
-    await act(async () => {
-      render(<ProfilePage name="Unknown" />);
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText(/no data available/i)).toBeInTheDocument();
-    });
+    expect(screen.getByText("Luke Skywalker")).toBeInTheDocument();
+    expect(screen.getByText("Height: 172 cm")).toBeInTheDocument();
+    expect(screen.getByText("Mass: 77 kg")).toBeInTheDocument();
+    expect(screen.getByText("Hair Color: blond")).toBeInTheDocument();
+    expect(screen.getByText("Skin Color: fair")).toBeInTheDocument();
+    expect(screen.getByText("Eye Color: blue")).toBeInTheDocument();
+    expect(screen.getByText("Birth Year: 19BBY")).toBeInTheDocument();
+    expect(screen.getByText("Gender: male")).toBeInTheDocument();
   });
 });

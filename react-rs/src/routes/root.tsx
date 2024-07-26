@@ -1,83 +1,74 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { RootState, AppDispatch } from "../store/store";
 import SearchSection from "../components/SearchSection";
-import ProfilePage from "../components/ProfilePage";
-import useLocalStorage from "../hooks/useLocalStorage";
 import CardList from "../components/CardList";
-import { Character } from "../interfaces";
 import Pagination from "../components/Pagination";
+import Flyout from "../components/Flyout";
+import ProfilePage from "../components/ProfilePage";
+import {
+  setSearchTerm,
+  setStoredSearchTerm,
+  setCurrentPage,
+  setPeople,
+  setTotalPages,
+} from "../store/peopleSlice";
+import { useGetPeopleQuery } from "../services/api";
+import ThemeSelector from "../components/ThemeSelector";
 
 const Root: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [people, setPeople] = useState<Character[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
-  const [storedSearchTerm, setStoredSearchTerm] = useLocalStorage(
-    "searchTerm",
-    "",
-  );
-
+  const dispatch: AppDispatch = useDispatch();
+  const {
+    searchTerm,
+    people,
+    totalPages,
+    currentPage,
+    storedSearchTerm,
+    selectedItems,
+  } = useSelector((state: RootState) => state.people);
   const [searchParams, setSearchParams] = useSearchParams();
   const pageFromUrl = parseInt(searchParams.get("page") || "1", 10);
   const detailsFromUrl = searchParams.get("details");
   const searchQuery = searchParams.get("search") || "";
 
-  useEffect(() => {
-    setCurrentPage(pageFromUrl);
-  }, [pageFromUrl]);
-
-  const fetchPeople = useCallback(() => {
-    setLoading(true);
-    const query = searchQuery.trim()
-      ? `?search=${searchQuery.trim()}&page=${currentPage}`
-      : `?page=${currentPage}`;
-
-    fetch(`https://swapi.dev/api/people/${query}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setPeople(data.results || []);
-        setTotalPages(Math.ceil(data.count / 10));
-        setError(null);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [searchQuery, currentPage]);
+  const { data, isLoading, isError, error } = useGetPeopleQuery({
+    searchQuery,
+    page: currentPage,
+  });
 
   useEffect(() => {
-    fetchPeople();
-  }, [fetchPeople]);
+    dispatch(setCurrentPage(pageFromUrl));
+  }, [pageFromUrl, dispatch]);
+
+  useEffect(() => {
+    if (isError) {
+      console.error(error);
+    } else if (data) {
+      dispatch(setPeople(data.results));
+      dispatch(setTotalPages(Math.ceil(data.count / 10)));
+    }
+  }, [data, isError, error, dispatch]);
 
   const handleInputChange = (term: string) => {
-    setSearchTerm(term);
+    dispatch(setSearchTerm(term));
   };
 
   const handleSearch = () => {
     const trimmedSearchTerm = searchTerm.trim();
     if (trimmedSearchTerm) {
       setSearchParams({ search: trimmedSearchTerm, page: "1" });
-      setStoredSearchTerm(trimmedSearchTerm);
+      dispatch(setStoredSearchTerm(trimmedSearchTerm));
     } else {
       setSearchParams({ page: "1" });
-      setStoredSearchTerm("");
+      dispatch(setStoredSearchTerm(""));
     }
-    setCurrentPage(1);
+    dispatch(setCurrentPage(1));
   };
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
+      dispatch(setCurrentPage(page));
       setSearchParams({ search: searchTerm.trim(), page: page.toString() });
     }
   };
@@ -87,24 +78,25 @@ const Root: React.FC = () => {
   };
 
   useEffect(() => {
-    setSearchTerm(storedSearchTerm);
-  }, [storedSearchTerm]);
+    dispatch(setSearchTerm(storedSearchTerm));
+  }, [storedSearchTerm, dispatch]);
 
   return (
     <div className="app">
+      <ThemeSelector />
       <div className="column sidebar">
         <SearchSection
           searchTerm={searchTerm}
           onSearchTermChange={handleInputChange}
           onSearch={handleSearch}
         />
-        {loading ? (
+        {isLoading ? (
           <>
             <div className="loader-text">Loading...</div>
             <div className="loader"></div>
           </>
-        ) : error ? (
-          <p className="error">{error}</p>
+        ) : isError ? (
+          <p className="error">{error.toString()}</p>
         ) : (
           <CardList
             people={people}
@@ -127,6 +119,7 @@ const Root: React.FC = () => {
         totalPages={totalPages}
         onPageChange={handlePageChange}
       />
+      {selectedItems.length > 0 && <Flyout />}
     </div>
   );
 };

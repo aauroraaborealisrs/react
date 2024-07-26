@@ -4,9 +4,11 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import Root from "./routes/root";
 import ErrorPage from "./components/error-page";
-import Detailed from "./routes/detailed";
 import Index from "./routes/index";
 import ErrorBoundary from "./components/errorBoundary";
+import { Provider } from "react-redux";
+import store from "./store/store";
+import { ThemeProvider } from "./ThemeContext";
 
 const router = createBrowserRouter([
   {
@@ -16,8 +18,6 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Index /> },
       {
-        path: "people/:contactId",
-        element: <Detailed />,
         errorElement: <ErrorPage />,
       },
     ],
@@ -28,9 +28,13 @@ const container = document.getElementById("root");
 if (container !== null) {
   ReactDOM.createRoot(container).render(
     <React.StrictMode>
-      <ErrorBoundary>
-        <RouterProvider router={router} />
-      </ErrorBoundary>
+      <ThemeProvider>
+        <Provider store={store}>
+          <ErrorBoundary>
+            <RouterProvider router={router} />
+          </ErrorBoundary>
+        </Provider>
+      </ThemeProvider>
     </React.StrictMode>,
   );
 } else {

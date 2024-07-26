@@ -14,6 +14,7 @@ const SearchSection: React.FC<SearchSectionProps> = ({
   return (
     <div className="search-section">
       <input
+        className="search-input"
         type="text"
         value={searchTerm}
         onChange={(e) => onSearchTermChange(e.target.value)}

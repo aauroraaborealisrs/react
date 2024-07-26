@@ -1,36 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Character } from "../interfaces";
+import React from "react";
+import { useGetPersonQuery } from "../services/api";
 
 interface ProfilePageProps {
   name: string;
 }
 
 const ProfilePage: React.FC<ProfilePageProps> = ({ name }) => {
-  const [person, setPerson] = useState<Character | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data, isLoading, isError, error } = useGetPersonQuery(name);
+  const person = data?.results[0];
 
-  useEffect(() => {
-    fetch(`https://swapi.dev/api/people/?search=${name}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setPerson(data.results[0] || null);
-        setError(null);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [name]);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="loader-col">
         <div className="loader-text">Loading...</div>
@@ -39,8 +18,8 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ name }) => {
     );
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
+  if (isError) {
+    return <div>Error: {error.toString()}</div>;
   }
 
   if (!person) {
