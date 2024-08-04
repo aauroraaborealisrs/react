@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { Character } from "../interfaces";
 import { RootState } from "../store/store";
@@ -49,13 +49,13 @@ const CardList: React.FC<CardListProps> = ({
                     handleCheckboxChange(person, e.target.checked)
                   }
                 />
-                <NavLink
+                <Link
                   data-testid={`link-${person.name}`}
-                  to={`/?search=${searchQuery}&page=${currentPage}&details=${encodeURIComponent(person.name)}`}
+                  href={`/?search=${searchQuery}&page=${currentPage}&details=${encodeURIComponent(person.name)}`}
                   className="active-link"
                 >
                   {person.name}
-                </NavLink>
+                </Link>
               </div>
             ))}
           </div>
