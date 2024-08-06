@@ -1,17 +1,12 @@
-import { AppProps } from "next/app";
-import { Provider } from "react-redux";
-import { ThemeProvider } from "../ThemeContext";
-import store from "../store/store";
-import "../index.css";
+import Layout from '../components/Layout';
+import { AppProps } from 'next/app';
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
-  return (
-    <Provider store={store}>
-      <ThemeProvider>
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </Provider>
-  );
-};
+function MyApp({ Component, pageProps }: AppProps) {
+    return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  )
+}
 
 export default MyApp;
