@@ -1,11 +1,11 @@
-import Layout from '../components/Layout';
 import { AppProps } from 'next/app';
+import '../index.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
-    <Layout>
+    // <Layout>
       <Component {...pageProps} />
-    </Layout>
+    // </Layout>
   )
 }
 

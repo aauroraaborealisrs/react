@@ -1,30 +1,16 @@
-// import React, { ReactNode } from 'react';
-// interface LayoutProps {
-//     children: ReactNode;
-//   }
-
-// const Layout: React.FC<LayoutProps> = ({ children }) => {
-//   return (
-//     <div className="content">
-//         {children}
-//     </div>
-//   );
-// };
- 
-// export default Layout;
-
-import { ReactNode, useState } from 'react';
+import { ReactNode, FormEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 
-interface LayoutProps {
+type LayoutProps = {
   children: ReactNode;
-}
+  title?: string;
+};
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout = ({ children, title = 'Star Wars Characters' }: LayoutProps) => {
   const [search, setSearch] = useState('');
   const router = useRouter();
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => { // Add type to event parameter
+  const handleSearch = (e: FormEvent) => {
     e.preventDefault();
     router.push(`/search?query=${search}`);
   };
@@ -32,7 +18,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div>
       <header>
-        <h1>Star Wars Characters</h1>
+        <h1>{title}</h1>
         <form onSubmit={handleSearch}>
           <input
             type="text"

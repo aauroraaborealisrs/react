@@ -1,5 +1,12 @@
 import Layout from '../../components/Layout';
+import CharacterDetail from '../../components/CharacterDetail';
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
+
+type Character = {
+  name: string;
+  url: string;
+};
 
 type CharacterProps = {
   character: {
@@ -12,40 +19,49 @@ type CharacterProps = {
     birth_year: string;
     gender: string;
   };
+  characters: Character[];
 };
 
-const Character = ({ character }: CharacterProps) => {
-  if (!character) return <div>Loading...</div>;
-
+const CharacterPage = ({ character, characters }: CharacterProps) => {
   return (
     <Layout>
-      <h1>{character.name}</h1>
-      <p>Height: {character.height}</p>
-      <p>Mass: {character.mass}</p>
-      <p>Hair Color: {character.hair_color}</p>
-      <p>Skin Color: {character.skin_color}</p>
-      <p>Eye Color: {character.eye_color}</p>
-      <p>Birth Year: {character.birth_year}</p>
-      <p>Gender: {character.gender}</p>
+      <div style={{ display: 'flex' }}>
+        <ul style={{ width: '30%' }}>
+          {characters.map((character, index) => (
+            <li key={index}>
+              <Link href={`/character/${character.url.split('/')[5]}`}>
+                {character.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div style={{ width: '70%' }}>
+          <CharacterDetail character={character} />
+        </div>
+      </div>
     </Layout>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  if (!context.params) {
-    throw new Error('Expected params to be defined');
-  }
-  
-  const { id } = context.params;
+  const id = context.params?.id;
 
-  const res = await fetch(`https://swapi.dev/api/people/${id}`);
-  const character = await res.json();
+  if (!id) {
+    throw new Error("ID parameter is missing");
+  }
+
+  const resCharacter = await fetch(`https://swapi.dev/api/people/${id}`);
+  const character = await resCharacter.json();
+
+  const resCharacters = await fetch('https://swapi.dev/api/people/');
+  const dataCharacters = await resCharacters.json();
 
   return {
     props: {
       character,
+      characters: dataCharacters.results,
     },
   };
 };
 
-export default Character;
+export default CharacterPage;
