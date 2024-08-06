@@ -1,9 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Character } from "../interfaces";
+import { Character, mockPeople } from "../interfaces";
+
+
 
 interface PeopleState {
   searchTerm: string;
   people: Character[];
+  loading: boolean;
+  error: string | null;
   totalPages: number;
   currentPage: number;
   storedSearchTerm: string;
@@ -12,7 +16,9 @@ interface PeopleState {
 
 const initialState: PeopleState = {
   searchTerm: "",
-  people: [],
+  people: mockPeople,
+  loading: false,
+  error: null,
   totalPages: 1,
   currentPage: 1,
   storedSearchTerm: "",
@@ -39,16 +45,12 @@ const peopleSlice = createSlice({
       state.totalPages = action.payload;
     },
     selectItem(state, action: PayloadAction<Character>) {
-      if (
-        !state.selectedItems.some((item) => item.name === action.payload.name)
-      ) {
+      if (!state.selectedItems.some((item) => item.name === action.payload.name)) {
         state.selectedItems.push(action.payload);
       }
     },
     unselectItem(state, action: PayloadAction<string>) {
-      state.selectedItems = state.selectedItems.filter(
-        (item) => item.name !== action.payload,
-      );
+      state.selectedItems = state.selectedItems.filter((item) => item.name !== action.payload);
     },
     unselectAllItems(state) {
       state.selectedItems = [];
@@ -66,5 +68,4 @@ export const {
   unselectItem,
   unselectAllItems,
 } = peopleSlice.actions;
-
 export default peopleSlice.reducer;

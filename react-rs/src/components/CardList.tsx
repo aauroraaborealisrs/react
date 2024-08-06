@@ -1,9 +1,9 @@
-import React from "react";
-import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { Character } from "../interfaces";
-import { RootState } from "../store/store";
-import { selectItem, unselectItem } from "../store/peopleSlice";
+import React from 'react';
+import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { Character } from '../interfaces';
+import { RootState } from '../store/store';
+import { selectItem, unselectItem } from '../store/peopleSlice';
 
 interface CardListProps {
   people: Character[];
@@ -11,15 +11,9 @@ interface CardListProps {
   currentPage: number;
 }
 
-const CardList: React.FC<CardListProps> = ({
-  people,
-  searchQuery,
-  currentPage,
-}) => {
+const CardList: React.FC<CardListProps> = ({ people, searchQuery, currentPage }) => {
   const dispatch = useDispatch();
-  const selectedItems = useSelector(
-    (state: RootState) => state.people.selectedItems,
-  );
+  const selectedItems = useSelector((state: RootState) => state.people.selectedItems);
 
   const handleCheckboxChange = (person: Character, isChecked: boolean) => {
     if (isChecked) {
@@ -42,12 +36,8 @@ const CardList: React.FC<CardListProps> = ({
                   data-testid={`checkbox-${person.name}`}
                   className="checkbox"
                   type="checkbox"
-                  checked={selectedItems.some(
-                    (item) => item.name === person.name,
-                  )}
-                  onChange={(e) =>
-                    handleCheckboxChange(person, e.target.checked)
-                  }
+                  checked={selectedItems.some((item) => item.name === person.name)}
+                  onChange={(e) => handleCheckboxChange(person, e.target.checked)}
                 />
                 <Link
                   data-testid={`link-${person.name}`}
