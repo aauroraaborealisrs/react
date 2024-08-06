@@ -6,7 +6,7 @@ type LayoutProps = {
   title?: string;
 };
 
-const Layout = ({ children, title = 'Star Wars Characters' }: LayoutProps) => {
+const Layout = ({ children }: LayoutProps) => {
   const [search, setSearch] = useState('');
   const router = useRouter();
 
@@ -16,11 +16,11 @@ const Layout = ({ children, title = 'Star Wars Characters' }: LayoutProps) => {
   };
 
   return (
-    <div>
-      <header>
-        <h1>{title}</h1>
-        <form onSubmit={handleSearch}>
+    <div className='column sidebar'>
+      <div>
+        <form onSubmit={handleSearch} className='search-section'>
           <input
+            className="search-input"
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -28,7 +28,7 @@ const Layout = ({ children, title = 'Star Wars Characters' }: LayoutProps) => {
           />
           <button type="submit">Search</button>
         </form>
-      </header>
+      </div>
       <main>
         {children}
       </main>
