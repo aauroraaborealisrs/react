@@ -9,9 +9,13 @@ type Character = {
 
 type SearchProps = {
   characters: Character[];
+  query: string;
+  page: number;
+  next: string | null;
+  previous: string | null;
 };
 
-const Search = ({ characters }: SearchProps) => {
+const Search = ({ characters, query, page, next, previous }: SearchProps) => {
   return (
     <Layout>
       <ul>
@@ -23,6 +27,14 @@ const Search = ({ characters }: SearchProps) => {
           </li>
         ))}
       </ul>
+      <div>
+        <Link href={`/search?query=${query}&page=${page - 1}`}>
+          <button disabled={!previous}>Previous</button>
+        </Link>
+        <Link href={`/search?query=${query}&page=${page + 1}`}>
+          <button disabled={!next}>Next</button>
+        </Link>
+      </div>
     </Layout>
   );
 };
@@ -30,13 +42,18 @@ const Search = ({ characters }: SearchProps) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { query } = context;
   const searchQuery = query.query || '';
+  const page = query.page ? parseInt(query.page as string) : 1;
 
-  const res = await fetch(`https://swapi.dev/api/people/?search=${searchQuery}`);
+  const res = await fetch(`https://swapi.dev/api/people/?search=${searchQuery}&page=${page}`);
   const data = await res.json();
 
   return {
     props: {
       characters: data.results || [],
+      query: searchQuery,
+      page,
+      next: data.next,
+      previous: data.previous,
     },
   };
 };
