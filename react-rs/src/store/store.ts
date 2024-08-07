@@ -1,5 +1,5 @@
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 type Character = {
   name: string;
@@ -16,25 +16,30 @@ const initialState: CharactersState = {
 };
 
 const charactersSlice = createSlice({
-  name: 'characters',
+  name: "characters",
   initialState,
   reducers: {
     toggleCharacterSelection: (state, action: PayloadAction<Character>) => {
       const character = action.payload;
-      const isSelected = state.selectedCharacters.find(c => c.url === character.url);
+      const isSelected = state.selectedCharacters.find(
+        (c) => c.url === character.url,
+      );
       if (isSelected) {
-        state.selectedCharacters = state.selectedCharacters.filter(c => c.url !== character.url);
+        state.selectedCharacters = state.selectedCharacters.filter(
+          (c) => c.url !== character.url,
+        );
       } else {
         state.selectedCharacters.push(character);
       }
     },
     unselectAll: (state) => {
       state.selectedCharacters = [];
-    }
+    },
   },
 });
 
-export const { toggleCharacterSelection, unselectAll } = charactersSlice.actions;
+export const { toggleCharacterSelection, unselectAll } =
+  charactersSlice.actions;
 
 export const store = configureStore({
   reducer: {

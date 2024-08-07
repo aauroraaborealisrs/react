@@ -1,9 +1,9 @@
-import React from 'react';
-import { GetServerSideProps } from 'next';
-import Link from 'next/link';
-import Layout from '../../components/Layout';
-import CharacterDetail from '../../components/CharacterDetail';
-import CharacterList from '../../components/CharacterList';
+import React from "react";
+import { GetServerSideProps } from "next";
+import Link from "next/link";
+import Layout from "../../components/Layout";
+import CharacterDetail from "../../components/CharacterDetail";
+import CharacterList from "../../components/CharacterList";
 
 type Character = {
   name: string;
@@ -25,24 +25,34 @@ type CharacterPageProps = {
   previous: string | null;
 };
 
-const CharacterPage = ({ character, characters, page, next, previous }: CharacterPageProps) => {
+const CharacterPage = ({
+  character,
+  characters,
+  page,
+  next,
+  previous,
+}: CharacterPageProps) => {
   return (
     <Layout>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: "flex" }}>
         <div>
           <CharacterList characters={characters} page={page} />
-          <div className='pagination-cont'>
-            <div className='pagination'>
+          <div className="pagination-cont">
+            <div className="pagination">
               <Link href={`/?page=${page - 1}`} passHref>
-                <button disabled={!previous} className='pagination-btn'>Previous</button>
+                <button disabled={!previous} className="pagination-btn">
+                  Previous
+                </button>
               </Link>
               <Link href={`/?page=${page + 1}`} passHref>
-                <button disabled={!next} className='pagination-btn'>Next</button>
+                <button disabled={!next} className="pagination-btn">
+                  Next
+                </button>
               </Link>
             </div>
           </div>
         </div>
-        <div style={{ width: '70%' }}>
+        <div style={{ width: "70%" }}>
           <CharacterDetail character={character} />
           <Link href={`/?page=${page}`} passHref>
             <button className="close-btn">Close</button>
@@ -64,7 +74,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const resCharacter = await fetch(`https://swapi.dev/api/people/${id}`);
   const character = await resCharacter.json();
 
-  const resCharacters = await fetch(`https://swapi.dev/api/people/?page=${page}`);
+  const resCharacters = await fetch(
+    `https://swapi.dev/api/people/?page=${page}`,
+  );
   const dataCharacters = await resCharacters.json();
 
   return {
