@@ -16,19 +16,7 @@ type HomeProps = {
 const Home = ({ characters, page }: HomeProps) => {
   return (
     <Layout>
-      {/* <ul>
-        {characters.map((character, index) => (
-          <li key={index} className="result-item">
-            <Link
-              href={`/character/${character.url.split("/")[5]}`}
-              className="active-link active"
-            >
-              {character.name}
-            </Link>
-          </li>
-        ))}
-      </ul> */}
-      <CharacterList characters={characters} />
+      <CharacterList characters={characters} page={page} />
 
       <div className="pagination-cont">
         <div className="pagination">
