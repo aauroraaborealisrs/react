@@ -8,7 +8,7 @@ type Character = {
   url: string;
 };
 
-type SearchProps = {
+export type SearchProps = {
   characters: Character[];
   query: string;
   page: number;
