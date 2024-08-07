@@ -16,7 +16,7 @@ type HomeProps = {
 const Home = ({ characters, page }: HomeProps) => {
   return (
     <Layout>
-      <CharacterList characters={characters} page={page} />
+      <CharacterList characters={characters} page={page} query={""} />
 
       <div className="pagination-cont">
         <div className="pagination">

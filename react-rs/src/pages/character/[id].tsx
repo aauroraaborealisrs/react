@@ -1,9 +1,9 @@
-import React from 'react';
-import { GetServerSideProps } from 'next';
-import Layout from '../../components/Layout';
-import CharacterDetail from '../../components/CharacterDetail';
-import CharacterList from '../../components/CharacterList';
-import Link from 'next/link';
+import React from "react";
+import { GetServerSideProps } from "next";
+import Layout from "../../components/Layout";
+import CharacterDetail from "../../components/CharacterDetail";
+import CharacterList from "../../components/CharacterList";
+import Link from "next/link";
 
 type Character = {
   name: string;
@@ -23,29 +23,42 @@ type CharacterPageProps = {
   page: number;
   next: string | null;
   previous: string | null;
-  query: string; // Добавьте параметр query
+  query: string;
 };
 
-const CharacterPage = ({ character, characters, page, next, previous, query }: CharacterPageProps) => {
-  console.log(`Character details for ${character.name}, page: ${page}, query: ${query}`);
-  
+const CharacterPage = ({
+  character,
+  characters,
+  page,
+  next,
+  previous,
+  query,
+}: CharacterPageProps) => {
+  console.log(
+    `Character details for ${character.name}, page: ${page}, query: ${query}`,
+  );
+
   return (
     <Layout>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: "flex" }}>
         <div>
           <CharacterList characters={characters} page={page} query={query} />
-          <div className='pagination-cont'>
-            <div className='pagination'>
+          <div className="pagination-cont">
+            <div className="pagination">
               <Link href={`/search?query=${query}&page=${page - 1}`} passHref>
-                <button disabled={!previous} className='pagination-btn'>Previous</button>
+                <button disabled={!previous} className="pagination-btn">
+                  Previous
+                </button>
               </Link>
               <Link href={`/search?query=${query}&page=${page + 1}`} passHref>
-                <button disabled={!next} className='pagination-btn'>Next</button>
+                <button disabled={!next} className="pagination-btn">
+                  Next
+                </button>
               </Link>
             </div>
           </div>
         </div>
-        <div style={{ width: '70%' }}>
+        <div style={{ width: "70%" }}>
           <CharacterDetail character={character} />
           <Link href={`/search?query=${query}&page=${page}`} passHref>
             <button className="close-btn">Close</button>
@@ -59,7 +72,7 @@ const CharacterPage = ({ character, characters, page, next, previous, query }: C
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id;
   const page = context.query.page ? parseInt(context.query.page as string) : 1;
-  const query = context.query.query || ""; 
+  const query = context.query.query || "";
 
   if (!id) {
     throw new Error("ID parameter is missing");
@@ -70,7 +83,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const resCharacter = await fetch(`https://swapi.dev/api/people/${id}`);
   const character = await resCharacter.json();
 
-  const resCharacters = await fetch(`https://swapi.dev/api/people/?search=${query}&page=${page}`);
+  const resCharacters = await fetch(
+    `https://swapi.dev/api/people/?search=${query}&page=${page}`,
+  );
   const dataCharacters = await resCharacters.json();
 
   return {
@@ -80,7 +95,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       page,
       next: dataCharacters.next,
       previous: dataCharacters.previous,
-      query, // Передаем query параметр
+      query,
     },
   };
 };
