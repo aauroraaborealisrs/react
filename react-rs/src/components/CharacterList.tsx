@@ -35,13 +35,14 @@ const CharacterList: React.FC<CharacterListProps> = ({
     <ul>
       {characters.map((character) => (
         <li key={character.url}>
-          <label>
+          <label className="result-item">
             <input
               type="checkbox"
+              className="checkbox"
               checked={isSelected(character)}
               onChange={() => handleCheckboxChange(character)}
             />
-            <Link
+            <Link className="active-link active"
               href={`/character/${character.url.split("/")[5]}?query=${query}&page=${page}`}
             >
               {character.name}

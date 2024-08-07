@@ -13,7 +13,7 @@ type CharacterDetailProps = {
 
 const CharacterDetail = ({ character }: CharacterDetailProps) => {
   return (
-    <div>
+    <div className="profile-page">
       <h1>{character.name}</h1>
       <p>Height: {character.height}</p>
       <p>Mass: {character.mass}</p>

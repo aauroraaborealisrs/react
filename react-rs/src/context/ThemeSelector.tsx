@@ -6,8 +6,9 @@ const ThemeSelector: React.FC = () => {
 
   return (
     <div className="theme-selector">
-      <label>
+      <label className="pointer">
         <input
+        
           type="radio"
           name="theme"
           value="light"
@@ -16,8 +17,9 @@ const ThemeSelector: React.FC = () => {
         />
         Light
       </label>
-      <label>
+      <label className="pointer">
         <input
+                
           type="radio"
           name="theme"
           value="dark"

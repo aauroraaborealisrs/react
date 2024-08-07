@@ -39,33 +39,40 @@ const CharacterPage = ({
   );
 
   return (
-    <Layout>
-      <div style={{ display: "flex" }}>
-        <div>
-          <CharacterList characters={characters} page={page} query={query} />
-          <div className="pagination-cont">
-            <div className="pagination">
-              <Link href={`/search?query=${query}&page=${page - 1}`} passHref>
-                <button disabled={!previous} className="pagination-btn">
-                  Previous
-                </button>
-              </Link>
-              <Link href={`/search?query=${query}&page=${page + 1}`} passHref>
-                <button disabled={!next} className="pagination-btn">
-                  Next
-                </button>
-              </Link>
+    <>
+      <Layout>
+        <div style={{ display: "flex" }} className="char-page">
+          <div>
+            <CharacterList characters={characters} page={page} query={query} />
+            <div className="pagination-cont">
+              <div className="pagination">
+                <Link href={`/search?query=${query}&page=${page - 1}`} passHref>
+                  <button disabled={!previous} className="pagination-btn">
+                    Previous
+                  </button>
+                </Link>
+                <Link href={`/search?query=${query}&page=${page + 1}`} passHref>
+                  <button disabled={!next} className="pagination-btn">
+                    Next
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-        <div style={{ width: "70%" }}>
-          <CharacterDetail character={character} />
-          <Link href={`/search?query=${query}&page=${page}`} passHref>
-            <button className="close-btn">Close</button>
-          </Link>
-        </div>
+      </Layout>
+
+      <div className="details-section">
+        <Link
+          href={`/search?query=${query}&page=${page}`}
+          passHref
+          className="close-btn-a"
+        >
+          <button>Close</button>
+        </Link>
+        <CharacterDetail character={character} />
       </div>
-    </Layout>
+    </>
   );
 };
 

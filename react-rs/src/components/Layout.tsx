@@ -20,8 +20,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="column sidebar">
       <ThemeSelector />
-
-      <div>
+      <div className="search">
         <form onSubmit={handleSearch} className="search-section">
           <input
             className="search-input"
@@ -30,7 +29,7 @@ const Layout = ({ children }: LayoutProps) => {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search characters..."
           />
-          <button type="submit">Search</button>
+          <button type="submit" className="sub-b">Search</button>
         </form>
       </div>
       <main>{children}</main>

@@ -28,11 +28,11 @@ const charactersSlice = createSlice({
     toggleCharacterSelection: (state, action: PayloadAction<Character>) => {
       const character = action.payload;
       const isSelected = state.selectedCharacters.find(
-        (c) => c.url === character.url
+        (c) => c.url === character.url,
       );
       if (isSelected) {
         state.selectedCharacters = state.selectedCharacters.filter(
-          (c) => c.url !== character.url
+          (c) => c.url !== character.url,
         );
       } else {
         state.selectedCharacters.push(character);
@@ -44,7 +44,8 @@ const charactersSlice = createSlice({
   },
 });
 
-export const { toggleCharacterSelection, unselectAll } = charactersSlice.actions;
+export const { toggleCharacterSelection, unselectAll } =
+  charactersSlice.actions;
 
 export const store = configureStore({
   reducer: {
