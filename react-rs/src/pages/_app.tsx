@@ -1,10 +1,10 @@
 import { AppProps } from "next/app";
+import { ThemeProvider } from "../context/ThemeContext";
 import { Provider } from "react-redux";
-import { ThemeProvider } from "../ThemeContext";
-import store from "../store/store";
+import { store } from "../store/store";
 import "../index.css";
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <ThemeProvider>
@@ -12,6 +12,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       </ThemeProvider>
     </Provider>
   );
-};
+}
 
 export default MyApp;

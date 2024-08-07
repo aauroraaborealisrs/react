@@ -1,34 +1,36 @@
 import React, { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../store/store";
-import { unselectAllItems } from "../store/peopleSlice";
-import { createCSVBlob } from "../csvUtils";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { unselectAll } from "../store/store";
+import { createCSVBlob, Character } from "../utils/csvutils.ts";
 
 const Flyout: React.FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const selectedItems = useSelector(
-    (state: RootState) => state.people.selectedItems,
+  const dispatch = useAppDispatch();
+  const selectedCharacters = useAppSelector(
+    (state) => state.characters.selectedCharacters,
   );
+
   const downloadLinkRef = useRef<HTMLAnchorElement | null>(null);
 
   const handleUnselectAll = () => {
-    dispatch(unselectAllItems());
+    dispatch(unselectAll());
   };
 
   const handleDownload = () => {
-    if (downloadLinkRef.current && selectedItems.length > 0) {
-      const blob = createCSVBlob(selectedItems);
+    if (downloadLinkRef.current && selectedCharacters.length > 0) {
+      const blob = createCSVBlob(selectedCharacters as Character[]);
       const url = URL.createObjectURL(blob);
       downloadLinkRef.current.href = url;
-      downloadLinkRef.current.download = `${selectedItems.length}_characters.csv`;
+      downloadLinkRef.current.download = `${selectedCharacters.length}_characters.csv`;
       downloadLinkRef.current.click();
       URL.revokeObjectURL(url);
     }
   };
 
+  if (selectedCharacters.length === 0) return null;
+
   return (
     <div className="flyout">
-      <span>{selectedItems.length} items are selected</span>
+      <span>{selectedCharacters.length} items are selected</span>
       <button onClick={handleUnselectAll}>Unselect all</button>
       <button onClick={handleDownload}>Download</button>
       <a ref={downloadLinkRef} style={{ display: "none" }}>
@@ -39,3 +41,4 @@ const Flyout: React.FC = () => {
 };
 
 export default Flyout;
+
