@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Layout from "../components/Layout";
 import { GetServerSideProps } from "next";
+import CharacterList from "../components/CharacterList";
 
 type Character = {
   name: string;
@@ -18,7 +19,7 @@ type SearchProps = {
 const Search = ({ characters, query, page, next, previous }: SearchProps) => {
   return (
     <Layout>
-      <ul>
+      {/* <ul>
         {characters.map((character, index) => (
           <li key={index} className="result-item">
             <Link
@@ -29,7 +30,9 @@ const Search = ({ characters, query, page, next, previous }: SearchProps) => {
             </Link>
           </li>
         ))}
-      </ul>
+      </ul> */}
+      <CharacterList characters={characters} />
+
       <div className="pagination-cont">
         <div className="pagination">
           <Link href={`/search?query=${query}&page=${page - 1}`}>

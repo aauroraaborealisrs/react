@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Layout from "../components/Layout";
 import { GetServerSideProps } from "next";
+import CharacterList from "../components/CharacterList";
 
 type Character = {
   name: string;
@@ -15,7 +16,7 @@ type HomeProps = {
 const Home = ({ characters, page }: HomeProps) => {
   return (
     <Layout>
-      <ul>
+      {/* <ul>
         {characters.map((character, index) => (
           <li key={index} className="result-item">
             <Link
@@ -26,7 +27,9 @@ const Home = ({ characters, page }: HomeProps) => {
             </Link>
           </li>
         ))}
-      </ul>
+      </ul> */}
+      <CharacterList characters={characters} />
+
       <div className="pagination-cont">
         <div className="pagination">
           <Link href={`/?page=${page - 1}`}>

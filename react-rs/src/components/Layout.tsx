@@ -1,5 +1,7 @@
 import { ReactNode, FormEvent, useState } from "react";
 import { useRouter } from "next/router";
+import ThemeSelector from "../context/ThemeSelector";
+import Flyout from "./Flyout";
 
 type LayoutProps = {
   children: ReactNode;
@@ -17,6 +19,8 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <div className="column sidebar">
+      <ThemeSelector />
+
       <div>
         <form onSubmit={handleSearch} className="search-section">
           <input
@@ -30,6 +34,7 @@ const Layout = ({ children }: LayoutProps) => {
         </form>
       </div>
       <main>{children}</main>
+      <Flyout />
     </div>
   );
 };
