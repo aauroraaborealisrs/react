@@ -33,8 +33,11 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
-    "plugins": [{ "name": "next" }]
+    "plugins": [{ "name": "next" }],
+    "types": [
+      "jest"
+    ]
   },
-  "include": ["./src", "./dist/types/**/*.ts", "./next-env.d.ts"],
+  "include": ["./src", "./dist/types/**/*.ts", "./next-env.d.ts", "tests/**/*"],
   "exclude": ["./node_modules"]
 }
