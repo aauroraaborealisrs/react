@@ -4,7 +4,13 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 type Character = {
   name: string;
   url: string;
-  [key: string]: any;
+  height?: string;
+  mass?: string;
+  hair_color?: string;
+  skin_color?: string;
+  eye_color?: string;
+  birth_year?: string;
+  gender?: string;
 };
 
 type CharactersState = {
@@ -22,11 +28,11 @@ const charactersSlice = createSlice({
     toggleCharacterSelection: (state, action: PayloadAction<Character>) => {
       const character = action.payload;
       const isSelected = state.selectedCharacters.find(
-        (c) => c.url === character.url,
+        (c) => c.url === character.url
       );
       if (isSelected) {
         state.selectedCharacters = state.selectedCharacters.filter(
-          (c) => c.url !== character.url,
+          (c) => c.url !== character.url
         );
       } else {
         state.selectedCharacters.push(character);
@@ -38,8 +44,7 @@ const charactersSlice = createSlice({
   },
 });
 
-export const { toggleCharacterSelection, unselectAll } =
-  charactersSlice.actions;
+export const { toggleCharacterSelection, unselectAll } = charactersSlice.actions;
 
 export const store = configureStore({
   reducer: {
