@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import Layout from '../components/Layout';
-import { GetServerSideProps } from 'next';
+import Link from "next/link";
+import Layout from "../components/Layout";
+import { GetServerSideProps } from "next";
 
 type Character = {
   name: string;
@@ -17,18 +17,27 @@ const Home = ({ characters, page }: HomeProps) => {
     <Layout>
       <ul>
         {characters.map((character, index) => (
-          <li key={index} className='result-item'>
-            <Link href={`/character/${character.url.split('/')[5]}`} className="active-link active">
+          <li key={index} className="result-item">
+            <Link
+              href={`/character/${character.url.split("/")[5]}`}
+              className="active-link active"
+            >
               {character.name}
             </Link>
           </li>
         ))}
       </ul>
-      <div className='pagination-cont'>
-      <div className='pagination'>
-        <Link href={`/?page=${page - 1}`}><button disabled={page === 1} className='pagination-btn'>Previous</button></Link>
-        <Link href={`/?page=${page + 1}`}><button className='pagination-btn'>Next</button></Link>
-      </div>
+      <div className="pagination-cont">
+        <div className="pagination">
+          <Link href={`/?page=${page - 1}`}>
+            <button disabled={page === 1} className="pagination-btn">
+              Previous
+            </button>
+          </Link>
+          <Link href={`/?page=${page + 1}`}>
+            <button className="pagination-btn">Next</button>
+          </Link>
+        </div>
       </div>
     </Layout>
   );

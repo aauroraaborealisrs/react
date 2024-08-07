@@ -1,5 +1,5 @@
-import { ReactNode, FormEvent, useState } from 'react';
-import { useRouter } from 'next/router';
+import { ReactNode, FormEvent, useState } from "react";
+import { useRouter } from "next/router";
 
 type LayoutProps = {
   children: ReactNode;
@@ -7,7 +7,7 @@ type LayoutProps = {
 };
 
 const Layout = ({ children }: LayoutProps) => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const router = useRouter();
 
   const handleSearch = (e: FormEvent) => {
@@ -16,9 +16,9 @@ const Layout = ({ children }: LayoutProps) => {
   };
 
   return (
-    <div className='column sidebar'>
+    <div className="column sidebar">
       <div>
-        <form onSubmit={handleSearch} className='search-section'>
+        <form onSubmit={handleSearch} className="search-section">
           <input
             className="search-input"
             type="text"
@@ -29,9 +29,7 @@ const Layout = ({ children }: LayoutProps) => {
           <button type="submit">Search</button>
         </form>
       </div>
-      <main>
-        {children}
-      </main>
+      <main>{children}</main>
     </div>
   );
 };
