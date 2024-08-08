@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 import { ReactNode, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -31,7 +31,9 @@ const Sidebar = ({ children }: SidebarProps) => {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search characters..."
           />
-          <button type="submit" className="sub-b">Search</button>
+          <button type="submit" className="sub-b">
+            Search
+          </button>
         </form>
       </div>
       <main>{children}</main>

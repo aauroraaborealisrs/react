@@ -1,9 +1,9 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import Sidebar from "../../../components/Sidebar";
 import CharacterList from "../../../components/CharacterList";
 import CharacterDetail from "../../../components/CharacterDetail";
-
+import Loading from "../../../components/Loading";
 
 type CharacterPageProps = {
   params: { id: string };
@@ -62,16 +62,18 @@ export default async function CharacterPage({
         </div>
       </Sidebar>
 
-      <div className="details-section">
-        <Link
-          href={`/search?query=${query}&page=${page}`}
-          passHref
-          className="close-btn-a"
-        >
-          <button>Close</button>
-        </Link>
-        <CharacterDetail character={character} />
-      </div>
+      <Suspense fallback={<Loading />}>
+        <div className="details-section">
+          <Link
+            href={`/search?query=${query}&page=${page}`}
+            passHref
+            className="close-btn-a"
+          >
+            <button>Close</button>
+          </Link>
+          <CharacterDetail character={character} />
+        </div>
+      </Suspense>
     </>
   );
 }

@@ -5,13 +5,17 @@ import CharacterList from "../components/CharacterList";
 const fetchCharacters = async (page: number) => {
   const res = await fetch(`https://swapi.dev/api/people/?page=${page}`);
   if (!res.ok) {
-    throw new Error('Failed to fetch characters');
+    throw new Error("Failed to fetch characters");
   }
   const data = await res.json();
   return data;
 };
 
-const Home = async ({ searchParams }: { searchParams: { [key: string]: string | undefined } }) => {
+const Home = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) => {
   const page = searchParams.page ? parseInt(searchParams.page as string) : 1;
   const data = await fetchCharacters(page);
 

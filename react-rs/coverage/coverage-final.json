@@ -1,2 +1,113 @@
-{"C:\\Users\\kate1\\OneDrive\\Документы\\programming\\RSReact\\rs projects\\react\\react-rs\\src\\csvUtils.ts": {"path":"C:\\Users\\kate1\\OneDrive\\Документы\\programming\\RSReact\\rs projects\\react\\react-rs\\src\\csvUtils.ts","statementMap":{"0":{"start":{"line":3,"column":28},"end":{"line":26,"column":1}},"1":{"start":{"line":4,"column":17},"end":{"line":13,"column":4}},"2":{"start":{"line":14,"column":15},"end":{"line":23,"column":4}},"3":{"start":{"line":14,"column":40},"end":{"line":23,"column":4}},"4":{"start":{"line":25,"column":2},"end":{"line":25,"column":62}},"5":{"start":{"line":25,"column":38},"end":{"line":25,"column":49}},"6":{"start":{"line":3,"column":13},"end":{"line":3,"column":28}},"7":{"start":{"line":28,"column":29},"end":{"line":31,"column":1}},"8":{"start":{"line":29,"column":20},"end":{"line":29,"column":44}},"9":{"start":{"line":30,"column":2},"end":{"line":30,"column":68}},"10":{"start":{"line":28,"column":13},"end":{"line":28,"column":29}}},"fnMap":{"0":{"name":"(anonymous_0)","decl":{"start":{"line":3,"column":28},"end":{"line":3,"column":29}},"loc":{"start":{"line":3,"column":64},"end":{"line":26,"column":1}}},"1":{"name":"(anonymous_1)","decl":{"start":{"line":14,"column":30},"end":{"line":14,"column":31}},"loc":{"start":{"line":14,"column":40},"end":{"line":23,"column":4}}},"2":{"name":"(anonymous_2)","decl":{"start":{"line":25,"column":31},"end":{"line":25,"column":32}},"loc":{"start":{"line":25,"column":38},"end":{"line":25,"column":49}}},"3":{"name":"(anonymous_3)","decl":{"start":{"line":28,"column":29},"end":{"line":28,"column":30}},"loc":{"start":{"line":28,"column":63},"end":{"line":31,"column":1}}}},"branchMap":{},"s":{"0":1,"1":2,"2":2,"3":4,"4":2,"5":6,"6":1,"7":1,"8":1,"9":1,"10":1},"f":{"0":2,"1":4,"2":6,"3":1},"b":{}}
+{
+  "C:\\Users\\kate1\\OneDrive\\Документы\\programming\\RSReact\\rs projects\\react\\react-rs\\src\\csvUtils.ts": {
+    "path": "C:\\Users\\kate1\\OneDrive\\Документы\\programming\\RSReact\\rs projects\\react\\react-rs\\src\\csvUtils.ts",
+    "statementMap": {
+      "0": {
+        "start": { "line": 3, "column": 28 },
+        "end": { "line": 26, "column": 1 }
+      },
+      "1": {
+        "start": { "line": 4, "column": 17 },
+        "end": { "line": 13, "column": 4 }
+      },
+      "2": {
+        "start": { "line": 14, "column": 15 },
+        "end": { "line": 23, "column": 4 }
+      },
+      "3": {
+        "start": { "line": 14, "column": 40 },
+        "end": { "line": 23, "column": 4 }
+      },
+      "4": {
+        "start": { "line": 25, "column": 2 },
+        "end": { "line": 25, "column": 62 }
+      },
+      "5": {
+        "start": { "line": 25, "column": 38 },
+        "end": { "line": 25, "column": 49 }
+      },
+      "6": {
+        "start": { "line": 3, "column": 13 },
+        "end": { "line": 3, "column": 28 }
+      },
+      "7": {
+        "start": { "line": 28, "column": 29 },
+        "end": { "line": 31, "column": 1 }
+      },
+      "8": {
+        "start": { "line": 29, "column": 20 },
+        "end": { "line": 29, "column": 44 }
+      },
+      "9": {
+        "start": { "line": 30, "column": 2 },
+        "end": { "line": 30, "column": 68 }
+      },
+      "10": {
+        "start": { "line": 28, "column": 13 },
+        "end": { "line": 28, "column": 29 }
+      }
+    },
+    "fnMap": {
+      "0": {
+        "name": "(anonymous_0)",
+        "decl": {
+          "start": { "line": 3, "column": 28 },
+          "end": { "line": 3, "column": 29 }
+        },
+        "loc": {
+          "start": { "line": 3, "column": 64 },
+          "end": { "line": 26, "column": 1 }
+        }
+      },
+      "1": {
+        "name": "(anonymous_1)",
+        "decl": {
+          "start": { "line": 14, "column": 30 },
+          "end": { "line": 14, "column": 31 }
+        },
+        "loc": {
+          "start": { "line": 14, "column": 40 },
+          "end": { "line": 23, "column": 4 }
+        }
+      },
+      "2": {
+        "name": "(anonymous_2)",
+        "decl": {
+          "start": { "line": 25, "column": 31 },
+          "end": { "line": 25, "column": 32 }
+        },
+        "loc": {
+          "start": { "line": 25, "column": 38 },
+          "end": { "line": 25, "column": 49 }
+        }
+      },
+      "3": {
+        "name": "(anonymous_3)",
+        "decl": {
+          "start": { "line": 28, "column": 29 },
+          "end": { "line": 28, "column": 30 }
+        },
+        "loc": {
+          "start": { "line": 28, "column": 63 },
+          "end": { "line": 31, "column": 1 }
+        }
+      }
+    },
+    "branchMap": {},
+    "s": {
+      "0": 1,
+      "1": 2,
+      "2": 2,
+      "3": 4,
+      "4": 2,
+      "5": 6,
+      "6": 1,
+      "7": 1,
+      "8": 1,
+      "9": 1,
+      "10": 1
+    },
+    "f": { "0": 2, "1": 4, "2": 6, "3": 1 },
+    "b": {}
+  }
 }

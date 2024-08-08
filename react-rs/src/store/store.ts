@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
