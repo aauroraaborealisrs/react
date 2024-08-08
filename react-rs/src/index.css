@@ -327,7 +327,9 @@ i {
 }
 
 .pagination-btn:disabled {
-  visibility: hidden;
+  cursor: none !important;
+  color:  var(--background-color);
+  border: none;
 }
 
 .active-link {

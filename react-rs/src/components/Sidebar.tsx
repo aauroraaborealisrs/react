@@ -1,14 +1,16 @@
+"use client"; 
+
 import { ReactNode, FormEvent, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import ThemeSelector from "../context/ThemeSelector";
 import Flyout from "./Flyout";
 
-type LayoutProps = {
+type SidebarProps = {
   children: ReactNode;
   title?: string;
 };
 
-const Layout = ({ children }: LayoutProps) => {
+const Sidebar = ({ children }: SidebarProps) => {
   const [search, setSearch] = useState("");
   const router = useRouter();
 
@@ -38,4 +40,4 @@ const Layout = ({ children }: LayoutProps) => {
   );
 };
 
-export default Layout;
+export default Sidebar;

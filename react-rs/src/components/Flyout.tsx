@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { unselectAll } from "../store/store";
