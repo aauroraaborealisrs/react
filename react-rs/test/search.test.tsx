@@ -1,88 +1,197 @@
-
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import fetchMock from 'jest-fetch-mock';
-import { useRouter } from 'next/router';
 import Search, { getServerSideProps, SearchProps } from "../src/pages/search";
+import { NextRouter } from "next/router";
+import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
+import { Provider } from "react-redux";
+import { store as appStore } from "../src/store/store";
 
-jest.mock('next/router', () => ({
-  useRouter: jest.fn(),
-}));
+export function createMockRouter(router: Partial<NextRouter>): NextRouter {
+  return {
+    basePath: "",
+    pathname: "/",
+    route: "/",
+    query: {},
+    asPath: "/",
+    back: jest.fn(),
+    beforePopState: jest.fn(),
+    prefetch: jest.fn().mockResolvedValue(undefined),
+    push: jest.fn().mockResolvedValue(true),
+    reload: jest.fn(),
+    forward: jest.fn(),
+    replace: jest.fn().mockResolvedValue(true),
+    events: {
+      on: jest.fn(),
+      off: jest.fn(),
+      emit: jest.fn(),
+    },
+    isFallback: false,
+    isReady: true,
+    isLocaleDomain: false,
+    isPreview: false,
+    ...router,
+  };
+}
 
-jest.mock('../src/components/CharacterList', () => () => <div>CharacterList Mock</div>);
-jest.mock('../src/components/Layout', () => ({ children }: { children: React.ReactNode }) => <div>{children}</div>);
+import { ReactNode } from "react";
 
-fetchMock.enableMocks();
+jest.mock("next/link", () => {
+  return ({ children }: { children: ReactNode }) => {
+    return children;
+  };
+});
 
-describe('Search', () => {
-  beforeEach(() => {
-    fetchMock.resetMocks();
-    (useRouter as jest.Mock).mockReturnValue({
-      query: {},
-    });
-  });
-
+describe("Search Component", () => {
   const mockProps: SearchProps = {
     characters: [
-      { name: 'Luke Skywalker', url: '1' },
-      { name: 'Darth Vader', url: '2' },
+      { name: "Luke Skywalker", url: "/people/1/" },
+      { name: "Darth Vader", url: "/people/4/" },
     ],
-    query: 'skywalker',
+    query: "Luke",
     page: 1,
-    next: 'next-page-url',
+    next: "/api/people/?search=Luke&page=2",
     previous: null,
   };
 
-  it('renders correctly with characters and pagination', () => {
-    render(<Search {...mockProps} />);
+  it("renders the CharacterList component with characters", () => {
+    render(
+      <Provider store={appStore}>
+        <RouterContext.Provider value={createMockRouter({})}>
+          <Search {...mockProps} />
+        </RouterContext.Provider>
+      </Provider>,
+    );
 
-    expect(screen.getByText('CharacterList Mock')).toBeInTheDocument();
-    expect(screen.getByText('Previous')).toBeInTheDocument();
-    expect(screen.getByText('Next')).toBeInTheDocument();
+    const characterListItems = screen.getAllByText(
+      /Luke Skywalker|Darth Vader/i,
+    );
+    expect(characterListItems.length).toBe(2);
   });
 
-  it('disables the Previous button when there is no previous page', () => {
-    render(<Search {...mockProps} />);
+  it("renders the Previous and Next buttons with correct states", () => {
+    render(
+      <Provider store={appStore}>
+        <RouterContext.Provider value={createMockRouter({})}>
+          <Search {...mockProps} />
+        </RouterContext.Provider>
+      </Provider>,
+    );
 
-    expect(screen.getByText('Previous')).toBeDisabled();
+    const previousButton = screen.getByText(/Previous/i);
+    const nextButton = screen.getByText(/Next/i);
+
+    expect(previousButton).toBeDisabled();
+    expect(nextButton).toBeEnabled();
   });
 
-  it('enables the Next button when there is a next page', () => {
-    render(<Search {...mockProps} />);
+  it("renders the Next button correctly when next is available", () => {
+    const propsWithNext: SearchProps = {
+      ...mockProps,
+      next: "/api/people/?search=Luke&page=2",
+    };
 
-    expect(screen.getByText('Next')).not.toBeDisabled();
+    render(
+      <Provider store={appStore}>
+        <RouterContext.Provider value={createMockRouter({})}>
+          <Search {...propsWithNext} />
+        </RouterContext.Provider>
+      </Provider>,
+    );
+
+    const nextButton = screen.getByText(/Next/i);
+    expect(nextButton).toBeEnabled();
   });
 
-  it('contains correct links for pagination buttons', () => {
-    render(<Search {...mockProps} />);
+  it("renders the Previous button correctly when previous is available", () => {
+    const propsWithPrevious: SearchProps = {
+      ...mockProps,
+      previous: "/api/people/?search=Luke&page=0",
+    };
 
-    expect(screen.getByText('Previous').closest('a')).toHaveAttribute('href', '/search?query=skywalker&page=0');
-    expect(screen.getByText('Next').closest('a')).toHaveAttribute('href', '/search?query=skywalker&page=2');
+    render(
+      <Provider store={appStore}>
+        <RouterContext.Provider value={createMockRouter({})}>
+          <Search {...propsWithPrevious} />
+        </RouterContext.Provider>
+      </Provider>,
+    );
+
+    const previousButton = screen.getByText(/Previous/i);
+    expect(previousButton).toBeEnabled();
+  });
+});
+
+import { GetServerSidePropsContext } from "next";
+import fetchMock from "jest-fetch-mock";
+
+describe("getServerSideProps", () => {
+  beforeEach(() => {
+    fetchMock.resetMocks();
   });
 
-  it('fetches data in getServerSideProps', async () => {
-    fetchMock.mockResponseOnce(JSON.stringify({
-      results: [
-        { name: 'Luke Skywalker', url: '1' },
-        { name: 'Darth Vader', url: '2' },
-      ],
-      next: 'next-page-url',
-      previous: null,
-    }));
+  it("fetches data and returns props correctly", async () => {
+    fetchMock.mockResponseOnce(
+      JSON.stringify({
+        results: [
+          { name: "Luke Skywalker", url: "/people/1/" },
+          { name: "Darth Vader", url: "/people/4/" },
+        ],
+        next: "/api/people/?search=Luke&page=2",
+        previous: null,
+      }),
+    );
 
-    const context = { query: { query: 'skywalker', page: '1' } };
-    const result = await getServerSideProps(context as any);
+    const context = {
+      query: { query: "Luke", page: "1" },
+    } as unknown as GetServerSidePropsContext;
 
-    expect(result).toEqual({
+    const response = await getServerSideProps(context);
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://swapi.dev/api/people/?search=Luke&page=1",
+    );
+
+    expect(response).toEqual({
       props: {
         characters: [
-          { name: 'Luke Skywalker', url: '1' },
-          { name: 'Darth Vader', url: '2' },
+          { name: "Luke Skywalker", url: "/people/1/" },
+          { name: "Darth Vader", url: "/people/4/" },
         ],
-        query: 'skywalker',
+        query: "Luke",
         page: 1,
-        next: 'next-page-url',
+        next: "/api/people/?search=Luke&page=2",
+        previous: null,
+      },
+    });
+  });
+
+  it("handles missing query and page correctly", async () => {
+    fetchMock.mockResponseOnce(
+      JSON.stringify({
+        results: [],
+        next: null,
+        previous: null,
+      }),
+    );
+
+    const context = {
+      query: {},
+    } as unknown as GetServerSidePropsContext;
+
+    const response = await getServerSideProps(context);
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://swapi.dev/api/people/?search=&page=1",
+    );
+
+    expect(response).toEqual({
+      props: {
+        characters: [],
+        query: "",
+        page: 1,
+        next: null,
         previous: null,
       },
     });

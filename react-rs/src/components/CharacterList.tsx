@@ -42,7 +42,8 @@ const CharacterList: React.FC<CharacterListProps> = ({
               checked={isSelected(character)}
               onChange={() => handleCheckboxChange(character)}
             />
-            <Link className="active-link active"
+            <Link
+              className="active-link active"
               href={`/character/${character.url.split("/")[5]}?query=${query}&page=${page}`}
             >
               {character.name}

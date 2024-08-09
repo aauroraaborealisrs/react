@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1723237087700" clover="3.2.0">
-  <project timestamp="1723237087700" name="All files">
-    <metrics statements="21" coveredstatements="21" conditionals="6" coveredconditionals="3" methods="6" coveredmethods="6" elements="33" coveredelements="30" complexity="0" loc="21" ncloc="21" packages="2" files="2" classes="2"/>
+<coverage generated="1723238297675" clover="3.2.0">
+  <project timestamp="1723238297675" name="All files">
+    <metrics statements="113" coveredstatements="81" conditionals="15" coveredconditionals="7" methods="35" coveredmethods="16" elements="163" coveredelements="104" complexity="0" loc="113" ncloc="113" packages="7" files="10" classes="10"/>
     <package name="src">
       <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
       <file name="csvUtils.ts" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\csvUtils.ts">
@@ -15,24 +15,155 @@
         <line num="30" count="1" type="stmt"/>
       </file>
     </package>
+    <package name="src.components">
+      <metrics statements="50" coveredstatements="36" conditionals="4" coveredconditionals="1" methods="14" coveredmethods="7"/>
+      <file name="CharacterList.tsx" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\components\CharacterList.tsx">
+        <metrics statements="15" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="4"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="22" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="24" count="8" type="stmt"/>
+        <line num="27" count="4" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="31" count="4" type="stmt"/>
+        <line num="32" count="8" type="stmt"/>
+        <line num="34" count="4" type="stmt"/>
+        <line num="37" count="8" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+      </file>
+      <file name="Flyout.tsx" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\components\Flyout.tsx">
+        <metrics statements="22" coveredstatements="13" conditionals="4" coveredconditionals="1" methods="4" coveredmethods="2"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="8" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="19" count="0" type="cond" truecount="0" falsecount="3"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="29" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+      </file>
+      <file name="Layout.tsx" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\components\Layout.tsx">
+        <metrics statements="13" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.context">
+      <metrics statements="12" coveredstatements="8" conditionals="2" coveredconditionals="0" methods="4" coveredmethods="1"/>
+      <file name="ThemeContext.tsx" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\context\ThemeContext.tsx">
+        <metrics statements="7" coveredstatements="3" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="21" count="0" type="stmt"/>
+      </file>
+      <file name="ThemeSelector.tsx" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\context\ThemeSelector.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.hooks">
+      <metrics statements="7" coveredstatements="6" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="1"/>
+      <file name="useTheme.ts" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\hooks\useTheme.ts">
+        <metrics statements="7" coveredstatements="6" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="7" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+      </file>
+    </package>
     <package name="src.pages">
-      <metrics statements="14" coveredstatements="14" conditionals="6" coveredconditionals="3" methods="2" coveredmethods="2"/>
+      <metrics statements="14" coveredstatements="14" conditionals="6" coveredconditionals="5" methods="2" coveredmethods="2"/>
       <file name="search.tsx" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\pages\search.tsx">
-        <metrics statements="14" coveredstatements="14" conditionals="6" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <metrics statements="14" coveredstatements="14" conditionals="6" coveredconditionals="5" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="19" count="1" type="stmt"/>
         <line num="20" count="4" type="stmt"/>
         <line num="42" count="1" type="stmt"/>
-        <line num="43" count="1" type="stmt"/>
-        <line num="44" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="45" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="47" count="1" type="stmt"/>
-        <line num="51" count="1" type="stmt"/>
-        <line num="54" count="1" type="stmt"/>
-        <line num="56" count="1" type="stmt"/>
+        <line num="43" count="2" type="stmt"/>
+        <line num="44" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="45" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="47" count="2" type="stmt"/>
+        <line num="51" count="2" type="stmt"/>
+        <line num="54" count="2" type="stmt"/>
+        <line num="56" count="2" type="stmt"/>
         <line num="67" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.store">
+      <metrics statements="16" coveredstatements="8" conditionals="2" coveredconditionals="0" methods="5" coveredmethods="1"/>
+      <file name="store.ts" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\store\store.ts">
+        <metrics statements="16" coveredstatements="8" conditionals="2" coveredconditionals="0" methods="5" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="33" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="59" count="8" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.utils">
+      <metrics statements="7" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
+      <file name="csvutils.ts" path="C:\Users\kate1\OneDrive\Документы\programming\RSReact\rs projects\react\react-rs\src\utils\csvutils.ts">
+        <metrics statements="7" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
       </file>
     </package>
   </project>

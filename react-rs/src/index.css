@@ -526,24 +526,24 @@ body {
   align-self: flex-end;
 }
 
-.search{
+.search {
   width: 100%;
   display: flex;
-  justify-content:space-around
+  justify-content: space-around;
 }
 
-.search-section{
+.search-section {
   display: flex;
 }
 
-.search-input{
-width: 240px;
+.search-input {
+  width: 240px;
 }
 
-.sub-b{
+.sub-b {
   margin-left: 10px;
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
 }

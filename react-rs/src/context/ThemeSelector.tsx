@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "../hooks/useTheme";
+import useTheme from "../hooks/useTheme";
 
 const ThemeSelector: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
@@ -8,7 +8,6 @@ const ThemeSelector: React.FC = () => {
     <div className="theme-selector">
       <label className="pointer">
         <input
-        
           type="radio"
           name="theme"
           value="light"
@@ -19,7 +18,6 @@ const ThemeSelector: React.FC = () => {
       </label>
       <label className="pointer">
         <input
-                
           type="radio"
           name="theme"
           value="dark"
