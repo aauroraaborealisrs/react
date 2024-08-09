@@ -1,50 +1,4 @@
-// import {
-//   Links,
-//   LiveReload,
-//   Meta,
-//   Outlet,
-//   Scripts,
-//   ScrollRestoration,
-// } from "@remix-run/react";
-// import type { LinksFunction } from "@remix-run/node";
-// import styles from "../src/index.css";
-// import Index from "./routes/_index";
-// import { Provider } from "react-redux";
-// import { ThemeProvider } from "../src/context/ThemeContext";
-// import { store } from "../src/store/store";
-// import Sidebar from "../src/components/Sidebar";
-
-// export const links: LinksFunction = () => {
-//   return [{ rel: "stylesheet", href: styles }];
-// };
-
-// export default function App() {
-//   return (
-//     <html lang="en">
-//       <head>
-//         <Meta />
-//         <Links />
-//       </head>
-//       <body>
-//         {/* <Outlet /> */}
-//         <Provider store={store}>
-//           <ThemeProvider>
-//           <Sidebar>
-//           <Outlet />
-//           </Sidebar>
-//           </ThemeProvider>
-//         </Provider>
-//         <ScrollRestoration />
-//         <Scripts />
-//         <LiveReload />
-//       </body>
-//     </html>
-//   );
-// }
-
-
 import {
-  Link,
   Links,
   LiveReload,
   Meta,
@@ -54,21 +8,20 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import { json, LoaderFunction } from "@remix-run/node";
-import styles from "../src/index.css";
-import Sidebar from "../src/components/Sidebar";
-import CharacterList from "../src/components/CharacterList";
+import styles from "./index.css";
+import { Link } from "@remix-run/react";
 import { Provider } from "react-redux";
-import { store } from "../src/store/store";
-import { ThemeProvider } from "../src/context/ThemeContext";
+import Sidebar from "./components/Sidebar";
+import { ThemeProvider } from "./components/ThemeContext";
+import { store } from "./store/store";
+import CharacterList from "./components/CharacterList";
 
 type Character = {
   name: string;
   url: string;
 };
 
-export const links = () => {
-  return [{ rel: "stylesheet", href: styles }];
-};
+export const links = () => [{ rel: "stylesheet", href: styles }];
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
@@ -82,7 +35,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json({ results: data.results, query, page: parseInt(page) });
 };
 
-export default function App() {
+export default function Index() {
   const { results, query, page } = useLoaderData<{ results: Character[]; query: string; page: number }>();
 
   return (
@@ -92,11 +45,10 @@ export default function App() {
         <Links />
       </head>
       <body>
-      <Provider store={store}>
-      <ThemeProvider>
+        <Provider store={store}>
+          <ThemeProvider>
         <Sidebar>
           <CharacterList characters={results} page={page} query={query} />
-          
           <div className="pagination-cont">
             <div className="pagination">
               <Link to={`/?query=${query}&page=${page - 1}`}>
@@ -113,7 +65,7 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
-        </ThemeProvider>
+                 </ThemeProvider>
          </Provider>
       </body>
     </html>
