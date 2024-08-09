@@ -1,17 +1,3 @@
-// {
-//   "compilerOptions": {
-//     "target": "ES2018",
-//     "jsx": "react-jsx",
-//     "module": "ESNext",
-//     "moduleResolution": "node10",
-//     "esModuleInterop": true,
-//     "forceConsistentCasingInFileNames": true,
-//     "strict": true,
-//     "noImplicitAny": true,
-//     "skipLibCheck": true
-//   }
-// }
-
 {
   "compilerOptions": {
     "target": "ES2020",
@@ -25,7 +11,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -38,6 +24,6 @@
       "jest"
     ]
   },
-  "include": ["./src", "./dist/types/**/*.ts", "./next-env.d.ts", "tests/**/*"],
+  "include": ["./src", "./dist/types/**/*.ts", "./next-env.d.ts", "test/**/*"],
   "exclude": ["./node_modules"]
 }

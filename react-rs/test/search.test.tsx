@@ -1,17 +1,17 @@
 
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import { useRouter } from 'next/router';
+import "@testing-library/jest-dom";
 import fetchMock from 'jest-fetch-mock';
+import { useRouter } from 'next/router';
 import Search, { getServerSideProps, SearchProps } from "../src/pages/search";
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
 
-jest.mock('../components/CharacterList', () => () => <div>CharacterList Mock</div>);
-jest.mock('../components/Layout', () => ({ children }: { children: React.ReactNode }) => <div>{children}</div>);
+jest.mock('../src/components/CharacterList', () => () => <div>CharacterList Mock</div>);
+jest.mock('../src/components/Layout', () => ({ children }: { children: React.ReactNode }) => <div>{children}</div>);
 
 fetchMock.enableMocks();
 
