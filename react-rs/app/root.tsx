@@ -1,190 +1,121 @@
-// // export default function Root(){
-// //     return <><h1> wtf</h1></>
-// // }
+// import {
+//   Links,
+//   LiveReload,
+//   Meta,
+//   Outlet,
+//   Scripts,
+//   ScrollRestoration,
+// } from "@remix-run/react";
+// import type { LinksFunction } from "@remix-run/node";
+// import styles from "../src/index.css";
+// import Index from "./routes/_index";
+// import { Provider } from "react-redux";
+// import { ThemeProvider } from "../src/context/ThemeContext";
+// import { store } from "../src/store/store";
+// import Sidebar from "../src/components/Sidebar";
 
-// import React, { useEffect } from "react";
-// import { useSelector, useDispatch } from "react-redux";
-// import { useSearchParams } from "react-router-dom";
-// import { AppDispatch, RootState } from "../src/store/store";
-// import { useGetPeopleQuery } from "../src/services/api";
-// import { setCurrentPage, setPeople, setSearchTerm, setStoredSearchTerm, setTotalPages } from "../src/store/peopleSlice";
-// import ThemeSelector from "../src/components/ThemeSelector";
-// import SearchSection from "../src/components/SearchSection";
-// import CardList from "../src/components/CardList";
-// import Pagination from "../src/components/Pagination";
-// import ProfilePage from "../src/components/ProfilePage";
-// import Flyout from "../src/components/Flyout";
-
-
-// const Root: React.FC = () => {
-//   const dispatch: AppDispatch = useDispatch();
-//   const {
-//     searchTerm,
-//     people,
-//     totalPages,
-//     currentPage,
-//     storedSearchTerm,
-//     selectedItems,
-//   } = useSelector((state: RootState) => state.people);
-//   const [searchParams, setSearchParams] = useSearchParams();
-//   const pageFromUrl = parseInt(searchParams.get("page") || "1", 10);
-//   const detailsFromUrl = searchParams.get("details");
-//   const searchQuery = searchParams.get("search") || "";
-
-//   const { data, isLoading, isError, error } = useGetPeopleQuery({
-//     searchQuery,
-//     page: currentPage,
-//   });
-
-//   useEffect(() => {
-//     dispatch(setCurrentPage(pageFromUrl));
-//   }, [pageFromUrl, dispatch]);
-
-//   useEffect(() => {
-//     if (isError) {
-//       console.error(error);
-//     } else if (data) {
-//       dispatch(setPeople(data.results));
-//       dispatch(setTotalPages(Math.ceil(data.count / 10)));
-//     }
-//   }, [data, isError, error, dispatch]);
-
-//   const handleInputChange = (term: string) => {
-//     dispatch(setSearchTerm(term));
-//   };
-
-//   const handleSearch = () => {
-//     const trimmedSearchTerm = searchTerm.trim();
-//     if (trimmedSearchTerm) {
-//       setSearchParams({ search: trimmedSearchTerm, page: "1" });
-//       dispatch(setStoredSearchTerm(trimmedSearchTerm));
-//     } else {
-//       setSearchParams({ page: "1" });
-//       dispatch(setStoredSearchTerm(""));
-//     }
-//     dispatch(setCurrentPage(1));
-//   };
-
-//   const handlePageChange = (page: number) => {
-//     if (page >= 1 && page <= totalPages) {
-//       dispatch(setCurrentPage(page));
-//       setSearchParams({ search: searchTerm.trim(), page: page.toString() });
-//     }
-//   };
-
-//   const handleCloseDetails = () => {
-//     setSearchParams({ search: searchQuery, page: currentPage.toString() });
-//   };
-
-//   useEffect(() => {
-//     dispatch(setSearchTerm(storedSearchTerm));
-//   }, [storedSearchTerm, dispatch]);
-
-//   return (
-//     <div className="app">
-//       <ThemeSelector />
-//       <div className="column sidebar">
-//         <SearchSection
-//           searchTerm={searchTerm}
-//           onSearchTermChange={handleInputChange}
-//           onSearch={handleSearch}
-//         />
-//         {isLoading ? (
-//           <>
-//             <div className="loader-text">Loading...</div>
-//             <div className="loader"></div>
-//           </>
-//         ) : isError ? (
-//           <p className="error">{error.toString()}</p>
-//         ) : (
-//           <CardList
-//             people={people}
-//             searchQuery={searchQuery}
-//             currentPage={currentPage}
-//           />
-//         )}
-//       </div>
-//       <div className="hide-div" onClick={handleCloseDetails}></div>
-//       {detailsFromUrl && (
-//         <div className="details-section">
-//           <button className="close-btn" onClick={handleCloseDetails}>
-//             Close
-//           </button>
-//           <ProfilePage name={detailsFromUrl} />
-//         </div>
-//       )}
-//       <Pagination
-//         currentPage={currentPage}
-//         totalPages={totalPages}
-//         onPageChange={handlePageChange}
-//       />
-//       {selectedItems.length > 0 && <Flyout />}
-//     </div>
-//   );
+// export const links: LinksFunction = () => {
+//   return [{ rel: "stylesheet", href: styles }];
 // };
 
-// export default Root;
+// export default function App() {
+//   return (
+//     <html lang="en">
+//       <head>
+//         <Meta />
+//         <Links />
+//       </head>
+//       <body>
+//         {/* <Outlet /> */}
+//         <Provider store={store}>
+//           <ThemeProvider>
+//           <Sidebar>
+//           <Outlet />
+//           </Sidebar>
+//           </ThemeProvider>
+//         </Provider>
+//         <ScrollRestoration />
+//         <Scripts />
+//         <LiveReload />
+//       </body>
+//     </html>
+//   );
+// }
 
-
-// import * as React from "react";
-// import * as ReactDOM from "react-dom/client";
-// import { createBrowserRouter, RouterProvider } from "react-router-dom";
-// import "../src/index.css";
-// import { Provider } from "react-redux";
-// import { ThemeProvider } from "../src/ThemeContext";
-// import store from "../src/store/store";
-// import ErrorBoundary from "../src/components/errorBoundary";
-// import Root from "../src/routes/root";
-// import ErrorPage from "../src/components/error-page";
-
-
-// const router = createBrowserRouter([
-//     {
-//       path: "/",
-//       element: <Root />,
-//       errorElement: <ErrorPage />,
-//       children: [
-//         {
-//           errorElement: <ErrorPage />,
-//         },
-//       ],
-//     },
-//   ]);
-  
-//   const container = document.getElementById("root");
-//   if (container !== null) {
-//     ReactDOM.createRoot(container).render(
-//       <React.StrictMode>
-//         <ThemeProvider>
-//           <Provider store={store}>
-//             <ErrorBoundary>
-//               <RouterProvider router={router} />
-//             </ErrorBoundary>
-//           </Provider>
-//         </ThemeProvider>
-//       </React.StrictMode>,
-//     );
-//   } else {
-//     console.error('Element with id "root" not found');
-//   }
-  
 
 import {
-    Links,
-    Meta
-  } from "@remix-run/react";
-  
-  export default function Root() {
-    return (
-      <html lang="en">
-        <head>
-          <Links />
-          <Meta />
-        </head>
-        <body>
-          test
-        </body>
-      </html>
-    );
+  Link,
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+} from "@remix-run/react";
+import { json, LoaderFunction } from "@remix-run/node";
+import styles from "../src/index.css";
+import Sidebar from "../src/components/Sidebar";
+import CharacterList from "../src/components/CharacterList";
+import { Provider } from "react-redux";
+import { store } from "../src/store/store";
+import { ThemeProvider } from "../src/context/ThemeContext";
+
+type Character = {
+  name: string;
+  url: string;
+};
+
+export const links = () => {
+  return [{ rel: "stylesheet", href: styles }];
+};
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const url = new URL(request.url);
+  const query = url.searchParams.get("query") || "";
+  const page = url.searchParams.get("page") || "1";
+  const res = await fetch(`https://swapi.dev/api/people/?search=${query}&page=${page}`);
+  if (!res.ok) {
+    throw new Response("Failed to fetch characters", { status: 500 });
   }
-  
+  const data = await res.json();
+  return json({ results: data.results, query, page: parseInt(page) });
+};
+
+export default function App() {
+  const { results, query, page } = useLoaderData<{ results: Character[]; query: string; page: number }>();
+
+  return (
+    <html lang="en">
+      <head>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+      <Provider store={store}>
+      <ThemeProvider>
+        <Sidebar>
+          <CharacterList characters={results} page={page} query={query} />
+          
+          <div className="pagination-cont">
+            <div className="pagination">
+              <Link to={`/?query=${query}&page=${page - 1}`}>
+                <button disabled={page === 1} className="pagination-btn">
+                  Previous
+                </button>
+              </Link>
+              <Link to={`/?query=${query}&page=${page + 1}`}>
+                <button className="pagination-btn">Next</button>
+              </Link>
+            </div>
+          </div>
+        </Sidebar>
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+        </ThemeProvider>
+         </Provider>
+      </body>
+    </html>
+  );
+}

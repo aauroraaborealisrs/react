@@ -1,3 +1,4 @@
+"use client";
 import React, { createContext, useState, ReactNode } from "react";
 
 interface ThemeContextType {
@@ -20,7 +21,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className="wrapper" data-theme={theme}>
+      <div className="app" data-theme={theme}>
         {children}
       </div>
     </ThemeContext.Provider>

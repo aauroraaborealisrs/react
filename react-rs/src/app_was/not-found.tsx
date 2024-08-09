@@ -1,13 +1,13 @@
+import Link from "next/link";
 import React from "react";
-import { Link } from "react-router-dom";
 
 export default function ErrorPage() {
   return (
-    <div id="error-page" className="white">
+    <div id="error-page">
       <h1>Oops! 404</h1>
       <p>Smth went wrong</p>
-      <Link to="/" className="gray-hov">
-        Back to Search
+      <Link href="/" className="gray-hov">
+        <button>Back to Search</button>
       </Link>
     </div>
   );
