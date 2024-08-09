@@ -1,5 +1,5 @@
-import { ReactNode, FormEvent, useState, useEffect } from "react";
-import { useNavigate, useLocation } from "@remix-run/react";
+import { ReactNode, useEffect, useState } from "react";
+import { Form, useSearchParams } from "@remix-run/react";
 import Flyout from "./Flyout";
 import ThemeSelector from "./ThemeSelector";
 
@@ -9,29 +9,23 @@ type SidebarProps = {
 };
 
 const Sidebar = ({ children }: SidebarProps) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const handleSearch = (e: FormEvent) => {
-    e.preventDefault();
-    navigate(`/search?query=${search}`);
-  };
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const query = params.get("query") || "";
+    const query = searchParams.get("query") || "";
     setSearch(query);
-  }, [location.search]);
+  }, [searchParams]);
 
   return (
     <div className="column sidebar">
       <ThemeSelector />
       <div className="search">
-        <form onSubmit={handleSearch} className="search-section">
+        <Form method="get" className="search-section">
           <input
             className="search-input"
             type="text"
+            name="query"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search characters..."
@@ -39,7 +33,7 @@ const Sidebar = ({ children }: SidebarProps) => {
           <button type="submit" className="sub-b">
             Search
           </button>
-        </form>
+        </Form>
       </div>
       <main>{children}</main>
       <Flyout />

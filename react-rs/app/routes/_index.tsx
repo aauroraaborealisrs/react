@@ -1,65 +1,33 @@
-import { Link, useLoaderData, useSubmit, Form } from "@remix-run/react";
-import { json } from "@remix-run/node";
-import type { LoaderFunction } from "@remix-run/node";
-import { useState } from "react";
+import { Link, useLoaderData } from "@remix-run/react";
+import { json, LoaderFunction } from "@remix-run/node";
+import Sidebar from "../components/Sidebar";
 import CharacterList from "../components/CharacterList";
-
-type Character = {
-  name: string;
-  url: string;
-};
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const query = url.searchParams.get("query") || "";
-  const page = url.searchParams.get("page") || "1";
+  const page = parseInt(url.searchParams.get("page") || "1", 10);
 
-  const res = await fetch(`https://swapi.dev/api/people/?search=${query}&page=${page}`);
+  let apiUrl = `https://swapi.dev/api/people/?page=${page}`;
+  if (query) {
+    apiUrl = `https://swapi.dev/api/people/?search=${query}&page=${page}`;
+  }
+
+  const res = await fetch(apiUrl);
   if (!res.ok) {
     throw new Response("Failed to fetch characters", { status: 500 });
   }
 
   const data = await res.json();
-  return json({ results: data.results, query, page: parseInt(page) });
+  return json({ data, query, page });
 };
 
-export default function Index() {
-  const { results, query, page } = useLoaderData<{
-    results: Character[];
-    query: string;
-    page: number;
-  }>();
-  const [searchInput, setSearchInput] = useState(query);
-  const submit = useSubmit();
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value);
-  };
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("query", searchInput);
-    submit(formData, { method: "get" });
-  };
+export default function Home() {
+  const { data, query, page } = useLoaderData<typeof loader>();
 
   return (
-    <div>
-      <Form onSubmit={handleSearchSubmit}>
-        <input
-          type="text"
-          name="query"
-          value={searchInput}
-          onChange={handleSearchChange}
-          placeholder="Search characters..."
-          className="search-input"
-        />
-        <button type="submit" className="sub-b">
-          Search
-        </button>
-      </Form>
-
-      <CharacterList characters={results} page={page} query={searchInput} />
+    <Sidebar>
+      <CharacterList characters={data.results} page={page} query={query} />
 
       <div className="pagination-cont">
         <div className="pagination">
@@ -73,6 +41,6 @@ export default function Index() {
           </Link>
         </div>
       </div>
-    </div>
+    </Sidebar>
   );
 }

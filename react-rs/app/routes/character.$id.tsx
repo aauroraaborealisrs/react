@@ -1,71 +1,64 @@
-import { useLoaderData, Link } from "@remix-run/react";
-import { json, LoaderFunction } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
+import { json, LoaderFunction } from "@remix-run/node"; // Импортируем тип для loader функции
 import Sidebar from "../components/Sidebar";
-import CharacterDetail from "../components/CharacterDetail";
 import CharacterList from "../components/CharacterList";
-
-type Character = {
-  name: string;
-  height: string;
-  mass: string;
-  hair_color: string;
-  skin_color: string;
-  eye_color: string;
-  birth_year: string;
-  gender: string;
-  url: string;
-};
+import CharacterDetail from "../components/CharacterDetail";
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const id = params.id;
   const url = new URL(request.url);
   const query = url.searchParams.get("query") || "";
-  const page = url.searchParams.get("page") || "1";
-  
+  const page = parseInt(url.searchParams.get("page") || "1", 10);
+
   if (!id) {
-    throw new Response("Character ID not found", { status: 404 });
+    throw new Response("Character ID is missing", { status: 400 });
   }
 
-  const resCharacter = await fetch(`https://swapi.dev/api/people/${id}`);
-  const character = await resCharacter.json();
+  const [characterRes, charactersRes] = await Promise.all([
+    fetch(`https://swapi.dev/api/people/${id}`),
+    fetch(`https://swapi.dev/api/people/?search=${query}&page=${page}`)
+  ]);
 
-  const resCharacters = await fetch(`https://swapi.dev/api/people/?search=${query}&page=${page}`);
-  const dataCharacters = await resCharacters.json();
+  const character = await characterRes.json();
+  const dataCharacters = await charactersRes.json();
 
-  return json({ character, characters: dataCharacters.results, page: parseInt(page), query });
+  return json({ character, dataCharacters, query, page });
 };
 
 export default function CharacterPage() {
-  const { character, characters, page, query } = useLoaderData<{
-    character: Character;
-    characters: Character[];
-    page: number;
-    query: string;
-  }>();
+  const { character, dataCharacters, query, page } = useLoaderData<typeof loader>();
+  const { results: characters, next, previous } = dataCharacters;
 
   return (
-    <Sidebar>
-      <div className="char-page">
-        <div className="details-section">
-          <Link to={`/search?query=${query}&page=${page}`} className="close-btn-a">
-            <button>Close</button>
-          </Link>
-          <CharacterDetail character={character} />
-        </div>
-        <CharacterList characters={characters} page={page} query={query} />
-        <div className="pagination-cont">
-          <div className="pagination">
-            <Link to={`/search?query=${query}&page=${page - 1}`}>
-              <button disabled={page === 1} className="pagination-btn">
-                Previous
-              </button>
-            </Link>
-            <Link to={`/search?query=${query}&page=${page + 1}`}>
-              <button className="pagination-btn">Next</button>
-            </Link>
+    <>
+      <Sidebar>
+        <div style={{ display: "flex" }} className="char-page">
+          <div>
+            <CharacterList characters={characters} page={page} query={query} />
+            <div className="pagination-cont">
+              <div className="pagination">
+                <Link to={`/search?query=${query}&page=${page - 1}`}>
+                  <button disabled={!previous} className="pagination-btn">
+                    Previous
+                  </button>
+                </Link>
+                <Link to={`/search?query=${query}&page=${page + 1}`}>
+                  <button disabled={!next} className="pagination-btn">
+                    Next
+                  </button>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
+      </Sidebar>
+
+      <div className="details-section">
+        <Link to={`/search?query=${query}&page=${page}`} className="close-btn-a">
+          <button>Close</button>
+        </Link>
+        <CharacterDetail character={character} />
       </div>
-    </Sidebar>
+    </>
   );
 }
