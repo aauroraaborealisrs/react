@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/context/ThemeContext.tsx</title>
+    <title>Code coverage report for src/components/CharacterDetail.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/context</a> ThemeContext.tsx</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/components</a> CharacterDetail.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/9</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
-                <span class="quiet">Functions</span>
                 <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>1/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
@@ -91,27 +91,24 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -119,34 +116,40 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { createContext, useState, ReactNode } from "react";
-&nbsp;
-interface ThemeContextType {
-  theme: string;
-  toggleTheme: () =&gt; void;
-}
-&nbsp;
-export const ThemeContext = createContext&lt;ThemeContextType | undefined&gt;(
-  undefined,
-);
-&nbsp;
-export const ThemeProvider: React.FC&lt;{ children: ReactNode }&gt; = ({
-  children,
-}) =&gt; {
-  const [theme, setTheme] = useState("light");
-&nbsp;
-  const toggleTheme = () =&gt; {
-    setTheme((prevTheme) =&gt; (prevTheme === "light" ? "dark" : <span class="branch-1 cbranch-no" title="branch not covered" >"light")</span>);
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">type CharacterDetailProps = {
+  character: {
+    name: string;
+    height: string;
+    mass: string;
+    hair_color: string;
+    skin_color: string;
+    eye_color: string;
+    birth_year: string;
+    gender: string;
   };
+};
 &nbsp;
+const CharacterDetail = ({ character }: CharacterDetailProps) =&gt; {
   return (
-    &lt;ThemeContext.Provider value={{ theme, toggleTheme }}&gt;
-      &lt;div className="app" data-theme={theme}&gt;
-        {children}
-      &lt;/div&gt;
-    &lt;/ThemeContext.Provider&gt;
+    &lt;div className="profile-page"&gt;
+      &lt;h1&gt;{character.name}&lt;/h1&gt;
+      &lt;p&gt;Height: {character.height}&lt;/p&gt;
+      &lt;p&gt;Mass: {character.mass}&lt;/p&gt;
+      &lt;p&gt;Hair Color: {character.hair_color}&lt;/p&gt;
+      &lt;p&gt;Skin Color: {character.skin_color}&lt;/p&gt;
+      &lt;p&gt;Eye Color: {character.eye_color}&lt;/p&gt;
+      &lt;p&gt;Birth Year: {character.birth_year}&lt;/p&gt;
+      &lt;p&gt;Gender: {character.gender}&lt;/p&gt;
+    &lt;/div&gt;
   );
 };
+&nbsp;
+export default CharacterDetail;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
