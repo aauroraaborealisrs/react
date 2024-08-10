@@ -2,16 +2,16 @@ import { renderHook } from "@testing-library/react";
 import { useTheme } from "../src/hooks/useTheme";
 import { ThemeContext } from "../src/context/ThemeContext";
 
-describe('useTheme', () => {
-  it('throws an error when used outside of ThemeProvider', () => {
+describe("useTheme", () => {
+  it("throws an error when used outside of ThemeProvider", () => {
     expect(() => renderHook(() => useTheme())).toThrowError(
-      'useTheme must be used within a ThemeProvider'
+      "useTheme must be used within a ThemeProvider",
     );
   });
 
-  it('returns context value when used within ThemeProvider', () => {
+  it("returns context value when used within ThemeProvider", () => {
     const mockContextValue = {
-      theme: 'light',
+      theme: "light",
       toggleTheme: jest.fn(),
     };
 
