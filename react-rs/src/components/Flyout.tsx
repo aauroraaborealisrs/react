@@ -33,7 +33,11 @@ const Flyout: React.FC = () => {
       <span>{selectedCharacters.length} items are selected</span>
       <button onClick={handleUnselectAll}>Unselect all</button>
       <button onClick={handleDownload}>Download</button>
-      <a ref={downloadLinkRef} data-testid="download-link" style={{ display: "none" }}>
+      <a
+        ref={downloadLinkRef}
+        data-testid="download-link"
+        style={{ display: "none" }}
+      >
         Download
       </a>
     </div>

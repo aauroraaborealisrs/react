@@ -1,16 +1,25 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { useRouter } from 'next/router';
-import Layout from '../src/components/Layout';
+import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import { useRouter } from "next/router";
+import Layout from "../src/components/Layout";
 
-jest.mock('next/router', () => ({
+jest.mock("next/router", () => ({
   useRouter: jest.fn(),
 }));
 
-jest.mock('../src/context/ThemeSelector', () => () => <div>Mocked ThemeSelector</div>);
-jest.mock('../src/components/Flyout', () => () => <div>Mocked Flyout</div>);
+jest.mock("../src/context/ThemeSelector", () => {
+  return function MockedThemeSelector() {
+    return <div>Mocked ThemeSelector</div>;
+  };
+});
 
-describe('Layout Component', () => {
+jest.mock("../src/components/Flyout", () => {
+  return function MockedFlyout() {
+    return <div>Mocked Flyout</div>;
+  };
+});
+
+describe("Layout Component", () => {
   const mockPush = jest.fn();
 
   beforeEach(() => {
@@ -23,44 +32,48 @@ describe('Layout Component', () => {
     jest.clearAllMocks();
   });
 
-  it('renders the ThemeSelector and Flyout components', () => {
+  it("renders the ThemeSelector and Flyout components", () => {
     render(
       <Layout>
         <div>Child Component</div>
-      </Layout>
+      </Layout>,
     );
 
-    expect(screen.getByText('Mocked ThemeSelector')).toBeInTheDocument();
-    expect(screen.getByText('Mocked Flyout')).toBeInTheDocument();
-    expect(screen.getByText('Child Component')).toBeInTheDocument();
+    expect(screen.getByText("Mocked ThemeSelector")).toBeInTheDocument();
+    expect(screen.getByText("Mocked Flyout")).toBeInTheDocument();
+    expect(screen.getByText("Child Component")).toBeInTheDocument();
   });
 
-  it('updates search state on input change', () => {
+  it("updates search state on input change", () => {
     render(
       <Layout>
         <div>Child Component</div>
-      </Layout>
+      </Layout>,
     );
 
-    const searchInput = screen.getByPlaceholderText('Search characters...') as HTMLInputElement;
+    const searchInput = screen.getByPlaceholderText(
+      "Search characters...",
+    ) as HTMLInputElement;
 
-    fireEvent.change(searchInput, { target: { value: 'Luke Skywalker' } });
-    expect(searchInput.value).toBe('Luke Skywalker');
+    fireEvent.change(searchInput, { target: { value: "Luke Skywalker" } });
+    expect(searchInput.value).toBe("Luke Skywalker");
   });
 
-  it('redirects to search page on form submit', () => {
+  it("redirects to search page on form submit", () => {
     render(
       <Layout>
         <div>Child Component</div>
-      </Layout>
+      </Layout>,
     );
 
-    const searchInput = screen.getByPlaceholderText('Search characters...') as HTMLInputElement;
-    const searchButton = screen.getByText('Search');
+    const searchInput = screen.getByPlaceholderText(
+      "Search characters...",
+    ) as HTMLInputElement;
+    const searchButton = screen.getByText("Search");
 
-    fireEvent.change(searchInput, { target: { value: 'Luke Skywalker' } });
+    fireEvent.change(searchInput, { target: { value: "Luke Skywalker" } });
     fireEvent.click(searchButton);
 
-    expect(mockPush).toHaveBeenCalledWith('/search?query=Luke Skywalker');
+    expect(mockPush).toHaveBeenCalledWith("/search?query=Luke Skywalker");
   });
 });

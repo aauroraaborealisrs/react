@@ -1,13 +1,13 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { ThemeContext, ThemeProvider } from '../src/context/ThemeContext';
+import { ThemeContext, ThemeProvider } from "../src/context/ThemeContext";
 
-describe('ThemeProvider', () => {
-  it('provides the default theme', () => {
+describe("ThemeProvider", () => {
+  it("provides the default theme", () => {
     const TestComponent = () => {
       const context = React.useContext(ThemeContext);
-      if (!context) throw new Error('ThemeContext is undefined');
+      if (!context) throw new Error("ThemeContext is undefined");
 
       return <span>Current theme: {context.theme}</span>;
     };
@@ -21,10 +21,10 @@ describe('ThemeProvider', () => {
     expect(screen.getByText(/Current theme: light/i)).toBeInTheDocument();
   });
 
-  it('toggles the theme when toggleTheme is called', () => {
+  it("toggles the theme when toggleTheme is called", () => {
     const TestComponent = () => {
       const context = React.useContext(ThemeContext);
-      if (!context) throw new Error('ThemeContext is undefined');
+      if (!context) throw new Error("ThemeContext is undefined");
 
       return (
         <>
@@ -47,10 +47,10 @@ describe('ThemeProvider', () => {
     expect(screen.getByText(/Current theme: dark/i)).toBeInTheDocument();
   });
 
-  it('applies the correct data-theme attribute', () => {
+  it("applies the correct data-theme attribute", () => {
     const TestComponent = () => {
       const context = React.useContext(ThemeContext);
-      if (!context) throw new Error('ThemeContext is undefined');
+      if (!context) throw new Error("ThemeContext is undefined");
 
       return (
         <>
@@ -68,12 +68,12 @@ describe('ThemeProvider', () => {
       </ThemeProvider>,
     );
 
-    const themeWrapper = getByTestId('theme-wrapper');
+    const themeWrapper = getByTestId("theme-wrapper");
 
-    expect(themeWrapper).toHaveAttribute('data-theme', 'light');
+    expect(themeWrapper).toHaveAttribute("data-theme", "light");
 
     fireEvent.click(screen.getByText(/toggle theme/i));
 
-    expect(themeWrapper).toHaveAttribute('data-theme', 'dark');
+    expect(themeWrapper).toHaveAttribute("data-theme", "dark");
   });
 });
