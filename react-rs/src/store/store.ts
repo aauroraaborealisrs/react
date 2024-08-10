@@ -13,7 +13,7 @@ type Character = {
   gender?: string;
 };
 
-type CharactersState = {
+export type CharactersState = {
   selectedCharacters: Character[];
 };
 
@@ -21,7 +21,7 @@ const initialState: CharactersState = {
   selectedCharacters: [],
 };
 
-const charactersSlice = createSlice({
+export const charactersSlice = createSlice({
   name: "characters",
   initialState,
   reducers: {
