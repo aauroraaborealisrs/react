@@ -9,7 +9,7 @@ type SidebarProps = {
 };
 
 const Sidebar = ({ children }: SidebarProps) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [search, setSearch] = useState("");
 
   useEffect(() => {

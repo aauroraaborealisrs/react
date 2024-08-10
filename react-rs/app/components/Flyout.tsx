@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { unselectAll } from "../store/store";
-import { Character, createCSVBlob } from "../utils/csvutils";
+import { createCSVBlob, Character } from "../utils/csvutils";
 
 const Flyout: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -33,7 +33,11 @@ const Flyout: React.FC = () => {
       <span>{selectedCharacters.length} items are selected</span>
       <button onClick={handleUnselectAll}>Unselect all</button>
       <button onClick={handleDownload}>Download</button>
-      <a ref={downloadLinkRef} style={{ display: "none" }}>
+      <a
+        ref={downloadLinkRef}
+        data-testid="download-link"
+        style={{ display: "none" }}
+      >
         Download
       </a>
     </div>

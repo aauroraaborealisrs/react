@@ -1,5 +1,12 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
+import type { LinksFunction } from "@remix-run/node";
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+} from "@remix-run/react";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import styles from "./index.css";

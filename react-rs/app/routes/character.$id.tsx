@@ -16,7 +16,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   const [characterRes, charactersRes] = await Promise.all([
     fetch(`https://swapi.dev/api/people/${id}`),
-    fetch(`https://swapi.dev/api/people/?search=${query}&page=${page}`)
+    fetch(`https://swapi.dev/api/people/?search=${query}&page=${page}`),
   ]);
 
   const character = await characterRes.json();
@@ -26,7 +26,8 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 };
 
 export default function CharacterPage() {
-  const { character, dataCharacters, query, page } = useLoaderData<typeof loader>();
+  const { character, dataCharacters, query, page } =
+    useLoaderData<typeof loader>();
   const { results: characters, next, previous } = dataCharacters;
 
   return (
@@ -54,7 +55,10 @@ export default function CharacterPage() {
       </Sidebar>
 
       <div className="details-section">
-        <Link to={`/search?query=${query}&page=${page}`} className="close-btn-a">
+        <Link
+          to={`/search?query=${query}&page=${page}`}
+          className="close-btn-a"
+        >
           <button>Close</button>
         </Link>
         <CharacterDetail character={character} />

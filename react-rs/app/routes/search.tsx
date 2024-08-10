@@ -1,5 +1,5 @@
 import { Link, useLoaderData } from "@remix-run/react";
-import { json, LoaderFunction } from "@remix-run/node"; 
+import { json, LoaderFunction } from "@remix-run/node";
 import Sidebar from "../components/Sidebar";
 import CharacterList from "../components/CharacterList";
 
@@ -8,7 +8,9 @@ export const loader: LoaderFunction = async ({ request }) => {
   const query = url.searchParams.get("query") || "";
   const page = parseInt(url.searchParams.get("page") || "1", 10);
 
-  const res = await fetch(`https://swapi.dev/api/people/?search=${query}&page=${page}`);
+  const res = await fetch(
+    `https://swapi.dev/api/people/?search=${query}&page=${page}`,
+  );
   const data = await res.json();
 
   return json({ data, query, page });

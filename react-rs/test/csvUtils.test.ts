@@ -1,5 +1,4 @@
-import { convertToCSV, createCSVBlob } from "../src/csvUtils";
-import { Character } from "../src/interfaces";
+import { Character, convertToCSV, createCSVBlob } from "../app/utils/csvutils";
 
 const sampleCharacters: Character[] = [
   {
@@ -11,6 +10,7 @@ const sampleCharacters: Character[] = [
     eye_color: "blue",
     birth_year: "19BBY",
     gender: "male",
+    url: "https://example.com/luke-skywalker",
   },
   {
     name: "Leia Organa",
@@ -21,6 +21,7 @@ const sampleCharacters: Character[] = [
     eye_color: "brown",
     birth_year: "19BBY",
     gender: "female",
+    url: "https://example.com/leia-organa",
   },
 ];
 

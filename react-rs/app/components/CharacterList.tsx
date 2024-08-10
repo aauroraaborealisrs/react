@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "@remix-run/react";
-import { toggleCharacterSelection, useAppDispatch, useAppSelector } from "../store/store";
+import {
+  toggleCharacterSelection,
+  useAppDispatch,
+  useAppSelector,
+} from "../store/store";
 
 type Character = {
   name: string;
