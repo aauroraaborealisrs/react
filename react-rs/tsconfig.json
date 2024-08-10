@@ -1,17 +1,3 @@
-// {
-//   "compilerOptions": {
-//     "target": "ES2018",
-//     "jsx": "react-jsx",
-//     "module": "ESNext",
-//     "moduleResolution": "node10",
-//     "esModuleInterop": true,
-//     "forceConsistentCasingInFileNames": true,
-//     "strict": true,
-//     "noImplicitAny": true,
-//     "skipLibCheck": true
-//   }
-// }
-
 {
   "compilerOptions": {
     "types": ["@remix-run/node", "vite/client"],

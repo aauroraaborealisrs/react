@@ -17,6 +17,7 @@
     "@remix-run/dev": "^2.11.1",
     "@remix-run/node": "^2.11.1",
     "@remix-run/react": "^2.11.1",
+    "@remix-run/serve": "^2.11.1",
     "@remix-run/server-runtime": "^2.11.1",
     "@types/react-redux": "^7.1.33",
     "isbot": "^4",

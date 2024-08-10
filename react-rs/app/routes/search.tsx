@@ -1,5 +1,5 @@
 import { Link, useLoaderData } from "@remix-run/react";
-import { json, LoaderFunction } from "@remix-run/node"; // Импортируем тип для loader функции
+import { json, LoaderFunction } from "@remix-run/node"; 
 import Sidebar from "../components/Sidebar";
 import CharacterList from "../components/CharacterList";
 
