@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>21/21</span>
+                <span class='fraction'>23/23</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>21/21</span>
+                <span class='fraction'>22/22</span>
             </div>
         
             
@@ -104,35 +104,38 @@
 <a name='L39'></a><a href='#L39'>39</a>
 <a name='L40'></a><a href='#L40'>40</a>
 <a name='L41'></a><a href='#L41'>41</a>
-<a name='L42'></a><a href='#L42'>42</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -144,56 +147,56 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../store/store";
-import { unselectAllItems } from "../store/peopleSlice";
-import { createCSVBlob } from "../csvUtils";
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useRef } from "react";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { unselectAll } from "../store/store";
+import { createCSVBlob, Character } from "../utils/csvutilsnew.ts";
 &nbsp;
 const Flyout: React.FC = () =&gt; {
-  const dispatch: AppDispatch = useDispatch();
-  const selectedItems = useSelector(
-    (state: RootState) =&gt; state.people.selectedItems,
+  const dispatch = useAppDispatch();
+  const selectedCharacters = useAppSelector(
+    (state) =&gt; state.characters.selectedCharacters,
   );
+&nbsp;
   const downloadLinkRef = useRef&lt;HTMLAnchorElement | null&gt;(null);
 &nbsp;
   const handleUnselectAll = () =&gt; {
-    dispatch(unselectAllItems());
+    dispatch(unselectAll());
   };
 &nbsp;
   const handleDownload = () =&gt; {
-    if (downloadLinkRef.current &amp;&amp; selectedItems.length &gt; 0) {
-      const blob = createCSVBlob(selectedItems);
+    if (downloadLinkRef.current &amp;&amp; selectedCharacters.length &gt; 0) {
+      const blob = createCSVBlob(selectedCharacters as Character[]);
       const url = URL.createObjectURL(blob);
       downloadLinkRef.current.href = url;
-      downloadLinkRef.current.download = `${selectedItems.length}_characters.csv`;
+      downloadLinkRef.current.download = `${selectedCharacters.length}_characters.csv`;
       downloadLinkRef.current.click();
       URL.revokeObjectURL(url);
     }
   };
 &nbsp;
+  if (selectedCharacters.length === 0) return null;
+&nbsp;
   return (
     &lt;div className="flyout"&gt;
-      &lt;span&gt;{selectedItems.length} items are selected&lt;/span&gt;
+      &lt;span&gt;{selectedCharacters.length} items are selected&lt;/span&gt;
       &lt;button onClick={handleUnselectAll}&gt;Unselect all&lt;/button&gt;
       &lt;button onClick={handleDownload}&gt;Download&lt;/button&gt;
-      &lt;a ref={downloadLinkRef} style={{ display: "none" }}&gt;
+      &lt;a ref={downloadLinkRef} data-testid="download-link" style={{ display: "none" }}&gt;
         Download
       &lt;/a&gt;
     &lt;/div&gt;
   );
 };
 &nbsp;
-export default Flyout;
-&nbsp;</pre></td></tr></table></pre>
+export default Flyout;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-26T19:18:42.487Z
+                at 2024-08-10T18:40:30.303Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

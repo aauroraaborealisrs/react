@@ -1,22 +1,12 @@
-// {
-//   "compilerOptions": {
-//     "target": "ES2018",
-//     "jsx": "react-jsx",
-//     "module": "ESNext",
-//     "moduleResolution": "node10",
-//     "esModuleInterop": true,
-//     "forceConsistentCasingInFileNames": true,
-//     "strict": true,
-//     "noImplicitAny": true,
-//     "skipLibCheck": true
-//   }
-// }
-
 {
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -25,7 +15,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -33,9 +23,22 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
-    "plugins": [{ "name": "next" }],
-    "types": ["jest"]
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "types": [
+      "jest"
+    ]
   },
-  "include": ["./src", "./dist/types/**/*.ts", "./next-env.d.ts", "tests/**/*"],
-  "exclude": ["./node_modules"]
+  "include": [
+    "./src",
+    "./dist/types/**/*.ts",
+    "./next-env.d.ts",
+    "test/**/*"
+  ],
+  "exclude": [
+    "./node_modules"
+  ]
 }
