@@ -1,34 +1,36 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface FormData {
   name: string;
   age: number;
   email: string;
   password: string;
+  confirmPassword: string;
   gender: string;
   picture: string;
   country: string;
+  terms: boolean;
 }
 
 export interface FormState {
-  uncontrolled: FormData | null;
-  controlled: FormData | null;
+  uncontrolled: FormData[]; 
+  controlled: FormData[]; 
 }
 
 const initialState: FormState = {
-  uncontrolled: null,
-  controlled: null,
+  uncontrolled: [],
+  controlled: [],
 };
 
 const formSlice = createSlice({
-  name: "form",
+  name: 'form',
   initialState,
   reducers: {
     saveUncontrolledForm(state, action: PayloadAction<FormData>) {
-      state.uncontrolled = action.payload;
+      state.uncontrolled.push(action.payload); 
     },
     saveControlledForm(state, action: PayloadAction<FormData>) {
-      state.controlled = action.payload;
+      state.controlled.push(action.payload); 
     },
   },
 });
