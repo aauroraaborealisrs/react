@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Resolver, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "react-redux";
-import { saveControlledForm } from "../store/formSlice";
-import { useNavigate } from "react-router-dom";
-import * as yup from "yup";
+import React, { useState } from 'react';
+import { Resolver, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useDispatch } from 'react-redux';
+import { saveControlledForm } from '../store/formSlice';
+import { useNavigate } from 'react-router-dom';
+import * as yup from 'yup';
 
 interface FormData {
   name: string;
@@ -21,41 +21,71 @@ interface FormData {
 const schema = yup.object().shape({
   name: yup
     .string()
-    .required()
-    .matches(/^[A-Z]/, "First letter must be uppercase"),
-  age: yup.number().required().positive().integer(),
-  email: yup.string().required().email(),
+    .required('Name is required')
+    .matches(/^[A-Z]/, 'First letter must be uppercase'),
+  age: yup
+    .number()
+    .required('Age is required')
+    .positive('Age must be a positive number')
+    .integer('Age must be an integer'),
+  email: yup
+    .string()
+    .required('Email is required')
+    .email('Invalid email format'),
   password: yup
     .string()
-    .required()
-    .min(8)
-    .matches(/[A-Z]/, "Must have one uppercase letter")
-    .matches(/[a-z]/, "Must have one lowercase letter")
-    .matches(/[0-9]/, "Must have one number")
-    .matches(/[@$!%*?&#]/, "Must have one special character"),
+    .required('Password is required')
+    .min(8, 'Password must be at least 8 characters')
+    .matches(/[A-Z]/, 'Must have one uppercase letter')
+    .matches(/[a-z]/, 'Must have one lowercase letter')
+    .matches(/[0-9]/, 'Must have one number')
+    .matches(/[@$!%*?&#]/, 'Must have one special character'),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref("password")], "Passwords must match")
-    .required(),
-  gender: yup.string().required(),
+    .oneOf([yup.ref('password')], 'Passwords must match')
+    .required('Confirm password is required'),
+  gender: yup.string().required('Gender is required'),
   picture: yup
     .mixed()
     .required()
     .test("fileSize", "File too large", (value) => {
-      if (!value || !(value instanceof FileList)) {
+      if (!value || !(value instanceof FileList) || value.length === 0) {
         return false;
       }
       return value[0].size <= 1024 * 1024;
     })
     .test("fileType", "Unsupported File Format", (value) => {
-      if (!value || !(value instanceof FileList)) {
+      if (!value || !(value instanceof FileList) || value.length === 0) {
         return false;
       }
       return ["image/jpeg", "image/png"].includes(value[0].type);
     }),
-  country: yup.string().required(),
-  terms: yup.boolean().oneOf([true], "Accept Terms is required").required(),
+  country: yup.string().required('Country is required'),
+  terms: yup
+    .boolean()
+    .oneOf([true], 'You must accept the terms and conditions')
+    .required('You must accept the terms and conditions'),
 });
+
+const ControlledForm: React.FC = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    watch,
+  } = useForm<FormData>({
+    resolver: yupResolver(schema) as unknown as Resolver<FormData>,
+    mode: 'onChange', 
+    reValidateMode: 'onChange',
+        criteriaMode: 'all',
+  });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const passwordValue = watch('password', '');
 
 const calculatePasswordStrength = (password: string) => {
   let score = 0;
@@ -68,30 +98,11 @@ const calculatePasswordStrength = (password: string) => {
 
   return score;
 };
-
-const ControlledForm: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: yupResolver(schema) as unknown as Resolver<FormData>,
-    mode: "onChange",
-    reValidateMode: "onChange",
-  });
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  const passwordStrength = calculatePasswordStrength(passwordValue);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
-  const passwordValue = watch("password", "");
-
-  const passwordStrength = calculatePasswordStrength(passwordValue);
 
   const onSubmit = (data: FormData) => {
     const file = data.picture[0];
@@ -100,7 +111,7 @@ const ControlledForm: React.FC = () => {
     reader.onloadend = () => {
       const base64String = reader.result as string;
       dispatch(saveControlledForm({ ...data, picture: base64String }));
-      navigate("/");
+      navigate('/');
     };
 
     if (file) {
@@ -111,75 +122,76 @@ const ControlledForm: React.FC = () => {
   const getPasswordStrengthInfo = (strength: number) => {
     switch (strength) {
       case 1:
-        return { color: "red", text: "Very Weak" };
+        return { color: 'red', text: 'Very Weak' };
       case 2:
-        return { color: "orange", text: "Weak" };
+        return { color: 'orange', text: 'Weak' };
       case 3:
-        return { color: "yellow", text: "Moderate" };
+        return { color: 'yellow', text: 'Moderate' };
       case 4:
-        return { color: "lightgreen", text: "Strong" };
+        return { color: 'lightgreen', text: 'Strong' };
       case 5:
-        return { color: "green", text: "Very Strong" };
+        return { color: 'green', text: 'Very Strong' };
       default:
-        return { color: "gray", text: "Too Short" };
+        return { color: 'gray', text: 'Too Short' };
     }
   };
+
+  console.log(isValid);
+
 
   const { color, text } = getPasswordStrengthInfo(passwordStrength);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="name">Name:</label>
-      <input id="name" type="text" {...register("name")} />
+      <input id="name" type="text" {...register('name')} />
       {errors.name && <p>{errors.name.message}</p>}
 
       <label htmlFor="age">Age:</label>
-      <input id="age" type="number" {...register("age")} />
+      <input id="age" type="number" {...register('age')} />
       {errors.age && <p>{errors.age.message}</p>}
 
       <label htmlFor="email">Email:</label>
-      <input id="email" type="email" {...register("email")} />
+      <input id="email" type="email" {...register('email')} />
       {errors.email && <p>{errors.email.message}</p>}
 
       <label htmlFor="password">Password:</label>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <input
             id="password"
-            type={passwordVisible ? "text" : "password"}
-            {...register("password")}
+            type={passwordVisible ? 'text' : 'password'}
+            {...register('password')}
           />
           <button type="button" onClick={togglePasswordVisibility}>
-            {passwordVisible ? "Hide" : "Show"}
+            {passwordVisible ? 'Hide' : 'Show'}
           </button>
         </div>
         {errors.password && <p>{errors.password.message}</p>}
-        <div
-          style={{
-            height: "5px",
-            backgroundColor: color,
-            width: "10%",
-            marginTop: "5px",
-          }}
-        />
+        <div style={{
+          height: '5px',
+          backgroundColor: color,
+          width: '100%',
+          marginTop: '5px',
+        }} />
         <p style={{ color }}>{text}</p>
       </div>
 
       <label htmlFor="confirmPassword">Confirm Password:</label>
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
         <input
           id="confirmPassword"
-          type={passwordVisible ? "text" : "password"}
-          {...register("confirmPassword")}
+          type={passwordVisible ? 'text' : 'password'}
+          {...register('confirmPassword')}
         />
         <button type="button" onClick={togglePasswordVisibility}>
-          {passwordVisible ? "Hide" : "Show"}
+          {passwordVisible ? 'Hide' : 'Show'}
         </button>
       </div>
       {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
 
       <label htmlFor="gender">Gender:</label>
-      <select id="gender" {...register("gender")}>
+      <select id="gender" {...register('gender')}>
         <option value="">Select...</option>
         <option value="male">Male</option>
         <option value="female">Female</option>
@@ -187,25 +199,20 @@ const ControlledForm: React.FC = () => {
       {errors.gender && <p>{errors.gender.message}</p>}
 
       <label htmlFor="picture">Picture:</label>
-      <input
-        id="picture"
-        type="file"
-        {...register("picture")}
-        accept=".png, .jpg, .jpeg"
-      />
+      <input id="picture" type="file" {...register('picture')} accept=".png, .jpg, .jpeg" />
       {errors.picture && <p>{errors.picture.message}</p>}
 
       <label htmlFor="country">Country:</label>
-      <input id="country" type="text" {...register("country")} />
+      <input id="country" type="text" {...register('country')} />
       {errors.country && <p>{errors.country.message}</p>}
 
       <label htmlFor="terms">
-        <input id="terms" type="checkbox" {...register("terms")} />
+        <input id="terms" type="checkbox" {...register('terms')} />
         Accept Terms and Conditions
       </label>
       {errors.terms && <p>{errors.terms.message}</p>}
 
-      <button type="submit">Submit</button>
+      <button type="submit" disabled={!isValid}>Submit</button>
     </form>
   );
 };
