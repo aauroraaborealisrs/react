@@ -16,21 +16,20 @@ const UncontrolledForm: React.FC = () => {
   const countryRef = useRef<HTMLInputElement>(null);
   const termsRef = useRef<HTMLInputElement>(null);
 
-
-const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-  
+
     if (!pictureRef.current?.files?.[0]) {
       alert("Please upload a picture.");
       return;
     }
-  
+
     const file = pictureRef.current.files[0];
     const reader = new FileReader();
-  
+
     reader.onloadend = () => {
       const base64String = reader.result as string;
-  
+
       const formData = {
         name: nameRef.current!.value,
         age: parseInt(ageRef.current!.value),
@@ -42,14 +41,13 @@ const handleSubmit = (event: React.FormEvent) => {
         country: countryRef.current!.value,
         terms: termsRef.current!.checked,
       };
-  
+
       dispatch(saveUncontrolledForm(formData));
       navigate("/");
     };
-  
+
     reader.readAsDataURL(file);
   };
-  
 
   return (
     <form onSubmit={handleSubmit}>
