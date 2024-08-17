@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 interface CountryAutocompleteProps {
   onSelectCountry: (country: string) => void;
   selectedCountry: string;
 }
 
-const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({ onSelectCountry, selectedCountry }) => {
-  const countries = useSelector((state: RootState) => state.countries.countries);
+const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
+  onSelectCountry,
+  selectedCountry,
+}) => {
+  const countries = useSelector(
+    (state: RootState) => state.countries.countries,
+  );
   const [searchTerm, setSearchTerm] = useState(selectedCountry);
   const [filteredCountries, setFilteredCountries] = useState<string[]>([]);
 
@@ -18,7 +23,7 @@ const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({ onSelectCount
 
     if (value) {
       const filtered = countries.filter((country) =>
-        country.toLowerCase().startsWith(value.toLowerCase())
+        country.toLowerCase().startsWith(value.toLowerCase()),
       );
       setFilteredCountries(filtered);
     } else {
@@ -33,8 +38,8 @@ const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({ onSelectCount
   };
 
   return (
-    <div>
-      <label htmlFor="country">Country:</label>
+    <div className="country-div">
+      <label htmlFor="country">Country: </label>
       <input
         id="country"
         type="text"
@@ -43,12 +48,24 @@ const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({ onSelectCount
         placeholder="Search for a country"
       />
       {filteredCountries.length > 0 && (
-        <ul style={{ border: '1px solid #ccc', maxHeight: '150px', overflowY: 'auto', padding: '0', margin: '0', listStyle: 'none' }}>
+        <ul
+          className="country-list"
+          style={{
+            maxHeight: "150px",
+            overflowY: "auto",
+            padding: "0",
+            listStyle: "none",
+          }}
+        >
           {filteredCountries.map((country) => (
             <li
               key={country}
               onClick={() => handleSelect(country)}
-              style={{ padding: '8px', cursor: 'pointer', backgroundColor: '#fff', borderBottom: '1px solid #ccc' }}
+              style={{
+                padding: "8px",
+                cursor: "pointer",
+                backgroundColor: "#fff",
+              }}
             >
               {country}
             </li>

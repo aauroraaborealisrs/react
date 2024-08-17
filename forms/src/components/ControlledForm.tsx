@@ -23,7 +23,9 @@ interface FormData {
 const ControlledForm: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const countries = useSelector((state: RootState) => state.countries.countries);
+  const countries = useSelector(
+    (state: RootState) => state.countries.countries,
+  );
   const schema = yup.object().shape({
     name: yup
       .string()
@@ -69,9 +71,13 @@ const ControlledForm: React.FC = () => {
     country: yup
       .string()
       .required("Country is required")
-      .test("isValidCountry", "You must select a valid country", function (value) {
-        return countries.includes(value || "");
-      }), // Проверяем, что страна выбрана из списка
+      .test(
+        "isValidCountry",
+        "You must select a valid country",
+        function (value) {
+          return countries.includes(value || "");
+        },
+      ),
     terms: yup
       .boolean()
       .oneOf([true], "You must accept the terms and conditions")
@@ -84,7 +90,7 @@ const ControlledForm: React.FC = () => {
     formState: { errors, isValid },
     watch,
     setValue,
-    trigger, 
+    trigger,
   } = useForm<FormData>({
     resolver: yupResolver(schema) as unknown as Resolver<FormData>,
     mode: "onChange",
@@ -138,13 +144,13 @@ const ControlledForm: React.FC = () => {
       case 2:
         return { color: "orange", text: "Weak" };
       case 3:
-        return { color: "yellow", text: "Moderate" };
+        return { color: "yellow", text: "Norm" };
       case 4:
-        return { color: "lightgreen", text: "Strong" };
+        return { color: "lightgreen", text: "S pivom poidet" };
       case 5:
-        return { color: "green", text: "Very Strong" };
+        return { color: "green", text: "AMAZING WONDERFUL SPECTACULAR" };
       default:
-        return { color: "gray", text: "Too Short" };
+        return { color: "white", text: "" };
     }
   };
 
@@ -166,7 +172,7 @@ const ControlledForm: React.FC = () => {
 
       <label htmlFor="password">Password:</label>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div className="password-cont" style={{ display: "flex" }}>
           <input
             id="password"
             type={passwordVisible ? "text" : "password"}
@@ -182,14 +188,14 @@ const ControlledForm: React.FC = () => {
             height: "5px",
             backgroundColor: color,
             width: "100%",
-            marginTop: "5px",
+            marginTop: "15px",
           }}
         />
         <p style={{ color }}>{text}</p>
       </div>
 
       <label htmlFor="confirmPassword">Confirm Password:</label>
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div className="password-cont" style={{ display: "flex" }}>
         <input
           id="confirmPassword"
           type={passwordVisible ? "text" : "password"}
@@ -222,7 +228,7 @@ const ControlledForm: React.FC = () => {
         onSelectCountry={(country) => {
           setValue("country", country);
           setCountryTouched(true);
-          trigger("country"); 
+          trigger("country");
         }}
         selectedCountry={countryValue}
       />

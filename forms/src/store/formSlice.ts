@@ -15,11 +15,13 @@ export interface FormData {
 export interface FormState {
   uncontrolled: FormData[];
   controlled: FormData[];
+  lastSubmittedForm: "uncontrolled" | "controlled" | null;
 }
 
 const initialState: FormState = {
   uncontrolled: [],
   controlled: [],
+  lastSubmittedForm: null,
 };
 
 const formSlice = createSlice({
@@ -28,9 +30,11 @@ const formSlice = createSlice({
   reducers: {
     saveUncontrolledForm(state, action: PayloadAction<FormData>) {
       state.uncontrolled.push(action.payload);
+      state.lastSubmittedForm = "uncontrolled";
     },
     saveControlledForm(state, action: PayloadAction<FormData>) {
       state.controlled.push(action.payload);
+      state.lastSubmittedForm = "controlled";
     },
   },
 });
