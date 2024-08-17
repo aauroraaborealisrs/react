@@ -12,20 +12,11 @@ const Main: React.FC = () => {
 
   return (
     <div>
-      <h1>Main Page</h1>
-
       <div>
         <h2>Data from Uncontrolled Form</h2>
         {uncontrolledData.length > 0 ? (
           uncontrolledData.map((data, index) => (
-            <div
-              key={index}
-              style={{
-                marginBottom: "20px",
-                padding: "10px",
-                border: "1px solid #ccc",
-              }}
-            >
+            <div key={index}>
               <p>
                 <strong>Name:</strong> {data.name}
               </p>
@@ -40,6 +31,9 @@ const Main: React.FC = () => {
               </p>
               <p>
                 <strong>Country:</strong> {data.country}
+              </p>
+              <p>
+                <strong>Password (idk for what but):</strong> {data.password}
               </p>
               <img
                 src={data.picture}
@@ -79,6 +73,9 @@ const Main: React.FC = () => {
               </p>
               <p>
                 <strong>Country:</strong> {data.country}
+              </p>
+              <p>
+                <strong>Password (idk for what but):</strong> {data.password}
               </p>
               <img
                 src={data.picture}

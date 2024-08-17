@@ -7,19 +7,21 @@ import ControlledForm from "./components/ControlledForm.tsx";
 const App: React.FC = () => {
   return (
     <Router>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Main</Link>
-          </li>
-          <li>
-            <Link to="/uncontrolled-form">Uncontrolled Form</Link>
-          </li>
-          <li>
-            <Link to="/controlled-form">Controlled Form</Link>
-          </li>
-        </ul>
-      </nav>
+      <header>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Main</Link>
+            </li>
+            <li>
+              <Link to="/uncontrolled-form">Uncontrolled Form</Link>
+            </li>
+            <li>
+              <Link to="/controlled-form">Controlled Form</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/uncontrolled-form" element={<UncontrolledForm />} />
